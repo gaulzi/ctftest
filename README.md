@@ -2,7 +2,7 @@
 
 A self-contained, aviation-themed practice range to warm up for the Brussels CTF.
 It is built for a **mixed team** (blue team, offensive, reverse engineering, forensics, CTI):
-22 challenges across six areas, each with a briefing, the exact tools to reach for,
+27 challenges across seven areas, each with a briefing, the exact tools to reach for,
 what you are meant to learn, tiered hints, and a full walkthrough for when you are stuck.
 
 Flags look like `AVIANS{...}`. The web portal checks them locally in your browser

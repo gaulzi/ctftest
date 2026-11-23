@@ -843,6 +843,164 @@ def c_persistence():
 
 
 # ---------------------------------------------------------------------------
+# 23 Crypto: repeating-key XOR
+# ---------------------------------------------------------------------------
+def c_xor():
+    cid = "23-xor-atis"
+    fl = "AVIANS{x0r_is_not_encryption}"
+    flag(cid, fl)
+    plain = ("ATIS BROADCAST EBBR -- FOR TRAINING ONLY\n"
+             "Runway 25L/25R in use. Wind 240 at 12 knots.\n"
+             "Transition level FL60. Expect ILS approach.\n"
+             "Operational note for crew: the lounge wifi key is " + fl + "\n"
+             "Advise on first contact you have information KILO.\n").encode()
+    key = b"ZAVENTEM"
+    ct = bytes(b ^ key[i % len(key)] for i, b in enumerate(plain))
+    wbin(cid, "atis_intercept.bin", ct)
+    wtext(cid, "note.txt", "Intercepted off a VHF datalink and saved raw.\n"
+          "It is scrambled with a short repeating key (classic XOR).\n")
+
+
+# ---------------------------------------------------------------------------
+# 24 Crypto: weak RSA
+# ---------------------------------------------------------------------------
+def c_rsa():
+    cid = "24-weak-crew-pki"
+    fl = "AVIANS{factordb_breaks_small_rsa}"
+    flag(cid, fl)
+    import sympy
+    rnd = random.Random(2024)
+    # Close primes: |p-q| is tiny, so Fermat factorisation breaks n instantly
+    # even though n is large enough to hold the flag. Classic "weak RSA".
+    p = sympy.nextprime(rnd.getrandbits(512))
+    q = sympy.nextprime(p + rnd.getrandbits(20))
+    n = p * q
+    e = 65537
+    m = int.from_bytes(fl.encode(), "big")
+    assert m < n
+    d = pow(e, -1, (p - 1) * (q - 1))
+    c = pow(m, e, n)
+    assert pow(c, d, n) == m
+    wtext(cid, "pubkey_and_cipher.txt",
+          "# Recovered from a crew-portal 'secure' token service.\n"
+          "# RSA, but the modulus is far too small to be safe.\n"
+          f"n = {n}\n"
+          f"e = {e}\n"
+          f"c = {c}\n")
+
+
+# ---------------------------------------------------------------------------
+# 25 Offensive: JWT with a weak signing secret
+# ---------------------------------------------------------------------------
+def c_jwt(wordlist):
+    cid = "25-crew-portal-jwt"
+    secret = "jetstream2026"
+    assert secret in wordlist
+    fl = "AVIANS{" + secret + "}"
+    flag(cid, fl)
+    import jwt as _jwt
+    token = _jwt.encode({"sub": "guest", "role": "viewer", "iss": "crewportal",
+                         "iat": 1731560400, "exp": 2000000000}, secret, algorithm="HS256")
+    wtext(cid, "captured_token.txt",
+          "Captured from the crew-portal 'remember me' cookie (Authorization: Bearer ...).\n"
+          "It is a JSON Web Token signed with HS256. The server reuses a weak secret.\n\n"
+          + token + "\n")
+
+
+# ---------------------------------------------------------------------------
+# Compile a 64-bit ELF; flag bytes are XOR-obfuscated so `strings` won't reveal them.
+# ---------------------------------------------------------------------------
+def _c_array(name, data):
+    return "unsigned char %s[] = {%s};" % (name, ",".join(str(b) for b in data))
+
+
+def _compile(cid, src, outname):
+    d = cdir(cid)
+    tmp = os.path.join(d, "_src.c")
+    with open(tmp, "w") as f:
+        f.write(src)
+    out = os.path.join(d, outname)
+    subprocess.run(["gcc", "-O0", "-fno-stack-protector", "-no-pie", tmp, "-o", out], check=True)
+    os.remove(tmp)
+
+
+# 26 RE: password-checking keypad
+def c_re_keypad():
+    cid = "26-hangar-keypad"
+    password = "OpenSesame172"
+    fl = "AVIANS{static_re_beats_the_keypad}"
+    flag(cid, fl)
+    k = 0x5A
+    enc_fl = bytes(b ^ k for b in fl.encode()) + b"\x00"
+    # obfuscate the password check: compare input[i]^0x2B to a constant table
+    tbl = bytes((ord(c) ^ 0x2B) for c in password)
+    src = f"""#include <stdio.h>
+#include <string.h>
+{_c_array("ct", tbl)}
+{_c_array("fe", enc_fl)}
+int check(const char*s){{
+  if(strlen(s)!={len(password)}) return 0;
+  for(int i=0;i<{len(password)};i++){{ if(((unsigned char)s[i]^0x2B)!=ct[i]) return 0; }}
+  return 1;
+}}
+int main(){{
+  char buf[64];
+  printf("Hangar 3 keypad. Enter access code: ");
+  if(!fgets(buf,sizeof buf,stdin)) return 1;
+  buf[strcspn(buf,"\\n")]=0;
+  if(check(buf)){{
+    for(int i=0; fe[i]; i++) putchar(fe[i]^0x5A);
+    putchar('\\n');
+  }} else printf("Access denied.\\n");
+  return 0;
+}}
+"""
+    _compile(cid, src, "keypad")
+    wtext(cid, "README.txt", "A door-keypad controller binary from hangar 3.\n"
+          "Find the access code it accepts; enter it to reveal the flag.\n"
+          "Reverse it statically (Ghidra / radare2 / Binary Ninja) -- strings alone won't do it.\n")
+
+
+# 27 Pwn: stack buffer overflow to reach a hidden function
+def c_pwn_jetway():
+    cid = "27-jetway-overflow"
+    fl = "AVIANS{smashed_the_jetway_stack}"
+    flag(cid, fl)
+    enc_fl = bytes(b ^ 0x5A for b in fl.encode()) + b"\x00"
+    src = f"""#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+{_c_array("fe", enc_fl)}
+void win(){{
+  for(int i=0; fe[i]; i++) putchar(fe[i]^0x5A);
+  putchar('\\n');
+  fflush(stdout);
+}}
+void vuln(){{
+  char name[64];
+  printf("Jetway controller v0.9\\n");
+  printf("Dock which aircraft? ");
+  fflush(stdout);
+  gets(name);                    /* intentionally vulnerable */
+  printf("Docking %s...\\n", name);
+}}
+int main(){{ setvbuf(stdout,0,2,0); vuln(); return 0; }}
+"""
+    # gets() triggers a warning but compiles; allow it
+    d = cdir(cid)
+    tmp = os.path.join(d, "_src.c")
+    with open(tmp, "w") as f:
+        f.write(src)
+    out = os.path.join(d, "jetway")
+    subprocess.run(["gcc", "-O0", "-fno-stack-protector", "-no-pie", "-w", tmp, "-o", out], check=True)
+    os.remove(tmp)
+    wtext(cid, "README.txt", "A jetway docking controller. It asks for an aircraft name and\n"
+          "copies it into a 64-byte buffer with no bounds check (gets()).\n"
+          "There is a win() function that is never called. Redirect execution to it.\n"
+          "Tools: gdb/pwndbg, radare2, pwntools, checksec. It is 64-bit, no PIE, no canary.\n")
+
+
+# ---------------------------------------------------------------------------
 def main():
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)
@@ -869,6 +1027,11 @@ def main():
     c_dropper()
     c_yara()
     c_persistence()
+    c_xor()
+    c_rsa()
+    c_jwt(wl)
+    c_re_keypad()
+    c_pwn_jetway()
 
     hashes = {cid: hashlib.sha256(v.strip().lower().encode()).hexdigest() for cid, v in FLAGS.items()}
     with open(os.path.join(ROOT, "portal", "flags.js"), "w") as f:

@@ -21,5 +21,10 @@ window.FLAG_HASHES = {
   "19-crew-hashes": "fea9c473c393f966808f3e4ed9e1c0c3db5c2d50193cfd7e8e550ed4cb4d702f",
   "20-baggage-dropper": "e76b1e2a4cdf72534f182b5ab4a7c6dad961b3279399220006ceb93e82975eaa",
   "21-yara-hunt": "faa97170a8b2685b8ab679477b79af60950eb757fb476700176aac88be943550",
-  "22-persistence-hunt": "30c0fd87bb7cf7225e1b17d22f520bdadfbcb2a7240358f4e4c1d42c20b175d9"
+  "22-persistence-hunt": "30c0fd87bb7cf7225e1b17d22f520bdadfbcb2a7240358f4e4c1d42c20b175d9",
+  "23-xor-atis": "f9942abfc0de9968f025170226ed269a383edb451c22044c4f104cf0be1fc168",
+  "24-weak-crew-pki": "41dc7db008b5383e8f85a7a6d0df56f1024ab6967519d8ecd523a9858613af18",
+  "25-crew-portal-jwt": "a3036c973a7913f38865af972e81d953680207f124c4bda3d706142d56566b3e",
+  "26-hangar-keypad": "b47941ba1b7fa35cba89e8f94ea7c8670f82760cbf2285dca6ae0c4b6473fec6",
+  "27-jetway-overflow": "8dfdcd4aad0e16d9e26d80df46bc01d0c81724308c88740355f1277c366deb6b"
 };

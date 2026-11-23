@@ -1,0 +1,2 @@
+Intercepted off a VHF datalink and saved raw.
+It is scrambled with a short repeating key (classic XOR).

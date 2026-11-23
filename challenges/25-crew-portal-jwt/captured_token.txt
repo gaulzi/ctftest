@@ -1,0 +1,4 @@
+Captured from the crew-portal 'remember me' cookie (Authorization: Bearer ...).
+It is a JSON Web Token signed with HS256. The server reuses a weak secret.
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJndWVzdCIsInJvbGUiOiJ2aWV3ZXIiLCJpc3MiOiJjcmV3cG9ydGFsIiwiaWF0IjoxNzMxNTYwNDAwLCJleHAiOjIwMDAwMDAwMDB9.DEnyn93u-V1Pb87cNm67cX7oqhncEvOH5q9qEY2rdKM

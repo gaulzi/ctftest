@@ -22,3 +22,8 @@ SPOILERS! All flags.
 20-baggage-dropper: AVIANS{never_run_what_you_cannot_read}
 21-yara-hunt: AVIANS{sample_31}
 22-persistence-hunt: AVIANS{hunt_cron_systemd_and_ssh_keys}
+23-xor-atis: AVIANS{x0r_is_not_encryption}
+24-weak-crew-pki: AVIANS{factordb_breaks_small_rsa}
+25-crew-portal-jwt: AVIANS{jetstream2026}
+26-hangar-keypad: AVIANS{static_re_beats_the_keypad}
+27-jetway-overflow: AVIANS{smashed_the_jetway_stack}
