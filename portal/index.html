@@ -1,0 +1,276 @@
+<title>Avians Flight Deck CTF</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: fixed radar-dark sidebar of categories + scrolling challenge list; challenge opens in a modal panel.
+   Palette: night-cockpit navy, instrument amber + radar green accents, warm-grey neutrals biased to navy. */
+:root{
+  --bg:#0b1016; --panel:#121a24; --panel2:#18222e; --line:#243141;
+  --fg:#e6edf3; --muted:#8aa0b4; --faint:#5b7488;
+  --amber:#ffb454; --green:#4ade80; --red:#ff6b6b; --cyan:#53b9d8;
+  --d1:#4ade80; --d2:#53b9d8; --d3:#ffb454;
+  --mono:'DM Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --sans:'Space Grotesk',system-ui,-apple-system,Segoe UI,sans-serif;
+  --body:'Inter',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);margin:0;line-height:1.5;
+  background-image:radial-gradient(circle at 80% -10%,rgba(83,185,216,.08),transparent 45%),radial-gradient(circle at 0% 100%,rgba(74,222,128,.06),transparent 40%);}
+h1,h2,h3{font-family:var(--sans);text-wrap:balance;margin:0}
+a{color:var(--cyan)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
+
+/* header */
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0e1620,#0b1016);}
+.head{display:flex;align-items:center;gap:16px;padding-block:18px;flex-wrap:wrap}
+.logo{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--green);position:relative;flex:none;
+  background:radial-gradient(circle,rgba(74,222,128,.15),transparent 70%)}
+.logo::before,.logo::after{content:"";position:absolute;inset:0;border-radius:50%}
+.logo::before{background:conic-gradient(from 0deg,rgba(74,222,128,.6),transparent 25%);animation:sweep 4s linear infinite}
+.logo::after{border:1px solid rgba(74,222,128,.25);transform:scale(.6)}
+@keyframes sweep{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.logo::before{animation:none}}
+.title b{font-family:var(--sans);font-size:1.35rem;letter-spacing:.3px;display:block}
+.title span{color:var(--muted);font-size:.82rem;font-family:var(--mono)}
+.score{margin-left:auto;text-align:right;font-family:var(--mono)}
+.score .pts{font-size:1.5rem;color:var(--amber);font-variant-numeric:tabular-nums}
+.score .lbl{font-size:.7rem;color:var(--faint);text-transform:uppercase;letter-spacing:.14em}
+.prog{height:5px;background:var(--panel2);border-radius:3px;overflow:hidden;margin-top:6px;width:160px}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));transition:width .4s}
+
+/* intro */
+.intro{padding-block:22px;border-bottom:1px solid var(--line);color:var(--muted);font-size:.93rem}
+.intro b{color:var(--fg)}
+.intro .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.chip{font-family:var(--mono);font-size:.76rem;border:1px solid var(--line);border-radius:999px;padding:4px 11px;color:var(--muted);background:var(--panel)}
+.chip b{color:var(--cyan)}
+
+/* category rail + grid */
+.main{display:grid;grid-template-columns:200px 1fr;gap:24px;padding-block:24px;align-items:start}
+.rail{position:sticky;top:12px;display:flex;flex-direction:column;gap:4px}
+.rail button{all:unset;cursor:pointer;padding:9px 12px;border-radius:8px;color:var(--muted);font-size:.9rem;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.rail button:hover{background:var(--panel)}
+.rail button.on{background:var(--panel2);color:var(--fg);box-shadow:inset 2px 0 0 var(--green)}
+.rail .n{font-family:var(--mono);font-size:.72rem;color:var(--faint)}
+.rail button.on .n{color:var(--green)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px;cursor:pointer;transition:border-color .15s,transform .15s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--cyan);transform:translateY(-2px)}
+.card.done{border-color:rgba(74,222,128,.5)}
+.card.done::after{content:"\2713 SOLVED";position:absolute;top:10px;right:-28px;transform:rotate(45deg);background:var(--green);color:#06230f;font-family:var(--mono);font-size:.6rem;font-weight:700;padding:3px 32px;letter-spacing:.1em}
+.card .cat{font-family:var(--mono);font-size:.68rem;color:var(--faint);text-transform:uppercase;letter-spacing:.12em}
+.card h3{font-size:1.06rem;margin:7px 0 9px}
+.card p{color:var(--muted);font-size:.83rem;margin:0 0 14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:.74rem}
+.dots i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--line);margin-right:3px}
+.dots.d1 i:nth-child(-n+1),.dots.d2 i:nth-child(-n+2),.dots.d3 i:nth-child(-n+3){background:var(--amber)}
+.pts{color:var(--amber)}
+
+/* modal */
+.scrim{position:fixed;inset:0;background:rgba(5,8,12,.78);backdrop-filter:blur(3px);display:none;z-index:40;padding:16px;overflow:auto}
+.scrim.open{display:flex;align-items:flex-start;justify-content:center}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:760px;width:100%;margin:24px auto;overflow:hidden}
+.mhead{padding:20px;padding-top:calc(20px + env(safe-area-inset-top,0px));border-bottom:1px solid var(--line);background:var(--panel2);position:relative}
+.mhead .cat{font-family:var(--mono);font-size:.7rem;color:var(--green);text-transform:uppercase;letter-spacing:.14em}
+.mhead h2{font-size:1.5rem;margin:6px 0 0}
+.mhead .x{position:absolute;top:16px;right:16px;all:unset;cursor:pointer;color:var(--muted);font-size:1.5rem;width:34px;height:34px;display:grid;place-items:center;border-radius:8px}
+.mhead .x:hover{background:var(--panel);color:var(--fg)}
+.mbody{padding:20px;display:flex;flex-direction:column;gap:20px}
+.mbody h4{font-family:var(--mono);font-size:.74rem;color:var(--faint);text-transform:uppercase;letter-spacing:.14em;margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.mbody h4::before{content:"";width:16px;height:1px;background:var(--line)}
+.story{color:var(--fg);font-size:.96rem}
+.q{background:rgba(83,185,216,.08);border-left:2px solid var(--cyan);padding:10px 14px;border-radius:0 8px 8px 0;font-size:.93rem}
+.files a{display:inline-flex;gap:6px;align-items:center;font-family:var(--mono);font-size:.82rem;background:var(--panel2);border:1px solid var(--line);border-radius:7px;padding:6px 11px;margin:0 6px 6px 0;color:var(--cyan);text-decoration:none}
+.files a:hover{border-color:var(--cyan)}
+.tool{border:1px solid var(--line);border-radius:9px;padding:11px 13px;margin-bottom:8px;background:var(--panel2)}
+.tool .tn{font-family:var(--sans);font-weight:600;color:var(--amber)}
+.tool .tw{font-size:.84rem;color:var(--muted);margin:3px 0 7px}
+.learn{font-size:.9rem;color:var(--muted);background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:13px 15px}
+code,.cmd{font-family:var(--mono);font-size:.82rem}
+.cmd{display:block;background:#0a0f15;border:1px solid var(--line);border-radius:7px;padding:9px 12px;color:#cfe3d4;white-space:pre-wrap;word-break:break-word;position:relative}
+.cmd .cp{position:absolute;top:6px;right:6px;all:unset;cursor:pointer;font-size:.66rem;font-family:var(--mono);color:var(--faint);border:1px solid var(--line);border-radius:5px;padding:2px 7px;background:var(--panel)}
+.cmd .cp:hover{color:var(--fg)}
+.reveal{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:.82rem;color:var(--amber);border:1px dashed var(--line);border-radius:8px;padding:8px 13px}
+.reveal:hover{border-color:var(--amber)}
+.hint{border-left:2px solid var(--amber);background:rgba(255,180,84,.06);padding:9px 13px;border-radius:0 7px 7px 0;font-size:.89rem;margin-top:8px;animation:fade .3s}
+.hint b{font-family:var(--mono);color:var(--amber);font-size:.74rem}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}}
+details.wt{border:1px solid var(--line);border-radius:9px;background:#0a0f15;overflow:hidden}
+details.wt summary{cursor:pointer;padding:11px 14px;font-family:var(--mono);font-size:.84rem;color:var(--red);list-style:none}
+details.wt summary::-webkit-details-marker{display:none}
+details.wt[open] summary{border-bottom:1px solid var(--line)}
+details.wt .cmd{margin:12px;border:none;background:transparent;padding:0}
+
+/* flag submit */
+.flagbox{border-top:1px solid var(--line);padding:18px 20px;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px));background:var(--panel2)}
+.flagform{display:flex;gap:10px;flex-wrap:wrap}
+.flagform input{flex:1;min-width:200px;background:#0a0f15;border:1px solid var(--line);border-radius:8px;padding:11px 14px;color:var(--fg);font-family:var(--mono);font-size:.9rem}
+.flagform input:focus{outline:none;border-color:var(--cyan)}
+.flagform button{all:unset;cursor:pointer;background:var(--green);color:#06230f;font-family:var(--sans);font-weight:600;padding:0 20px;border-radius:8px;display:grid;place-items:center}
+.flagform button:hover{filter:brightness(1.1)}
+.verdict{margin-top:11px;font-family:var(--mono);font-size:.85rem;min-height:1.2em}
+.verdict.ok{color:var(--green)}
+.verdict.no{color:var(--red)}
+footer{border-top:1px solid var(--line);color:var(--faint);font-size:.8rem;padding-block:22px;text-align:center}
+footer code{color:var(--muted)}
+@media(max-width:720px){
+  .main{grid-template-columns:1fr}
+  .rail{position:static;flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:6px}
+  .rail button{white-space:nowrap}
+  .score{margin-left:0}
+}
+</style>
+
+<header><div class="wrap head">
+  <div class="logo" aria-hidden="true"></div>
+  <div class="title"><b>AVIANS FLIGHT DECK</b><span>practice capture-the-flag &middot; blue / offensive / RE / forensics</span></div>
+  <div class="score">
+    <div class="pts"><span id="pts">0</span></div>
+    <div class="lbl"><span id="done">0</span>/<span id="total">0</span> solved</div>
+    <div class="prog"><i id="bar" style="width:0"></i></div>
+  </div>
+</div></header>
+
+<div class="wrap">
+  <div class="intro">
+    A self-contained training range for the Brussels event. Every challenge is aviation-themed and solvable with standard Kali tools.
+    Download the file(s), work in your VM, and submit the flag here &mdash; flags are checked locally in your browser, so <b>nothing you enter leaves this page</b>.
+    Flags look like <code>AVIANS{&hellip;}</code>. Stuck? Open a challenge and reveal hints one at a time; the full walkthrough is there if you need it.
+    <div class="row">
+      <span class="chip">format&nbsp; <b>AVIANS{...}</b></span>
+      <span class="chip">wordlist&nbsp; <b>challenges/_shared/aviation_wordlist.txt</b></span>
+      <span class="chip">everything&nbsp; <b>challenges/avians-ctf-pack.zip</b></span>
+    </div>
+  </div>
+
+  <div class="main">
+    <nav class="rail" id="rail"></nav>
+    <div class="grid" id="grid"></div>
+  </div>
+</div>
+
+<footer class="wrap">
+  Practice range for authorized CTF training. Scenarios and data are fictional.
+  Regenerate files with <code>python3 generator/build.py</code>.
+</footer>
+
+<div class="scrim" id="scrim"><div class="modal" id="modal"></div></div>
+
+<script src="flags.js"></script>
+<script src="data.js"></script>
+<script>
+const $=(s,r=document)=>r.querySelector(s), el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+const esc=s=>String(s).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+const HASHES=window.FLAG_HASHES||{}, CH=window.CHALLENGES||[], CATS=window.CATEGORIES||[];
+let solved={}, curCat='all';
+try{solved=JSON.parse(localStorage.getItem('avians_solved')||'{}')}catch(e){solved={}}
+const save=()=>{try{localStorage.setItem('avians_solved',JSON.stringify(solved))}catch(e){}};
+async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+
+function score(){
+  let pts=0,n=0; CH.forEach(c=>{if(solved[c.id]){pts+=c.points;n++}});
+  $('#pts').textContent=pts; $('#done').textContent=n; $('#total').textContent=CH.length;
+  $('#bar').style.width=(CH.length?n/CH.length*100:0)+'%';
+}
+function rail(){
+  const r=$('#rail'); r.innerHTML='';
+  const mk=(id,name,list)=>{const done=list.filter(c=>solved[c.id]).length;
+    const b=el('button',id===curCat?'on':'',`<span>${name}</span><span class="n">${done}/${list.length}</span>`);
+    b.onclick=()=>{curCat=id;rail();grid()};r.appendChild(b)};
+  mk('all','All challenges',CH);
+  CATS.forEach(cat=>mk(cat.id,cat.name,CH.filter(c=>c.cat===cat.id)));
+}
+function grid(){
+  const g=$('#grid'); g.innerHTML='';
+  const list=curCat==='all'?CH:CH.filter(c=>c.cat===curCat);
+  list.forEach(c=>{
+    const cat=CATS.find(x=>x.id===c.cat)||{name:c.cat};
+    const card=el('div','card'+(solved[c.id]?' done':''));
+    card.innerHTML=`<div class="cat">${esc(cat.name)}</div><h3>${esc(c.title)}</h3><p>${esc(c.story)}</p>
+      <div class="meta"><span class="dots d${c.diff}"><i></i><i></i><i></i></span><span class="pts">${c.points} pts</span></div>`;
+    card.onclick=()=>open(c);
+    g.appendChild(card);
+  });
+}
+function cmd(text){
+  const d=el('div','cmd',esc(text));
+  const b=el('button','cp',null,'Copy');b.textContent='copy';
+  b.onclick=e=>{e.stopPropagation();navigator.clipboard?.writeText(text).then(()=>{b.textContent='copied';setTimeout(()=>b.textContent='copy',1200)}).catch(()=>{})};
+  d.appendChild(b);return d;
+}
+function open(c){
+  const cat=CATS.find(x=>x.id===c.cat)||{name:c.cat};
+  const m=$('#modal'); m.innerHTML='';
+  const h=el('div','mhead',`<div class="cat">${esc(cat.name)} &middot; ${c.points} pts</div><h2>${esc(c.title)}</h2>`);
+  const x=el('button','x',null);x.innerHTML='&times;';x.onclick=close;h.appendChild(x);
+  m.appendChild(h);
+  const b=el('div','mbody');
+
+  b.appendChild(el('div','story',esc(c.story)));
+  b.appendChild(el('div','q','<b>Objective:</b> '+esc(c.question)));
+
+  const files=el('div'); files.appendChild(el('h4',null,'Files'));
+  const fl=el('div','files');
+  (c.files||[]).forEach(f=>{
+    const a=el('a',null,'&#8681; '+esc(f));
+    a.href='../challenges/'+c.id+'/'+f; a.setAttribute('download','');
+    if(f.endsWith('/')){a.removeAttribute('download');a.textContent='\u{1F4C1} '+f;}
+    fl.appendChild(a);
+  });
+  files.appendChild(fl); b.appendChild(files);
+
+  const tools=el('div'); tools.appendChild(el('h4',null,'Tools for the job'));
+  (c.tools||[]).forEach(t=>{
+    const tw=el('div','tool',`<div class="tn">${esc(t.name)}</div><div class="tw">${esc(t.why)}</div>`);
+    if(t.cmd)tw.appendChild(cmd(t.cmd));
+    tools.appendChild(tw);
+  });
+  b.appendChild(tools);
+
+  const lrn=el('div'); lrn.appendChild(el('h4',null,'What you’re learning'));
+  lrn.appendChild(el('div','learn',esc(c.learn))); b.appendChild(lrn);
+
+  const hwrap=el('div'); hwrap.appendChild(el('h4',null,'Hints'));
+  let shown=0; const hbox=el('div');
+  const rb=el('button','reveal',null); rb.innerHTML='&#128161; Reveal a hint ('+(c.hints||[]).length+' available)';
+  rb.onclick=()=>{
+    if(shown<c.hints.length){
+      hbox.appendChild(el('div','hint',`<b>HINT ${shown+1}</b><br>${esc(c.hints[shown])}`));shown++;
+      if(shown>=c.hints.length)rb.style.display='none';else rb.innerHTML='&#128161; Reveal hint '+(shown+1)+' of '+c.hints.length;
+    }
+  };
+  hwrap.appendChild(hbox); hwrap.appendChild(rb); b.appendChild(hwrap);
+
+  if(c.solve){
+    const wt=el('details','wt');
+    wt.appendChild(el('summary',null,'&#9888;&#65039; Full walkthrough &mdash; open only if truly stuck'));
+    wt.appendChild(cmd(c.solve)); b.appendChild(wt);
+  }
+  m.appendChild(b);
+
+  const fb=el('div','flagbox');
+  fb.innerHTML='<h4 style="margin-bottom:10px">Submit flag</h4>';
+  const form=el('form','flagform');
+  const inp=el('input'); inp.placeholder='AVIANS{...}'; inp.id='flaginp'; inp.autocomplete='off';
+  if(solved[c.id]){inp.value='✓ already solved';inp.disabled=true}
+  const btn=el('button',null,null); btn.type='submit'; btn.textContent=solved[c.id]?'✓':'Check';
+  form.appendChild(inp); form.appendChild(btn);
+  const v=el('div','verdict');
+  form.onsubmit=async e=>{
+    e.preventDefault(); const g=inp.value.trim(); if(!g)return;
+    const hit=HASHES[c.id] && (await sha(g.toLowerCase()))===HASHES[c.id];
+    if(hit){v.className='verdict ok';v.textContent='✓ Correct — cleared for takeoff. +'+c.points+' pts';
+      solved[c.id]=true;save();score();rail();grid();btn.textContent='✓';}
+    else{v.className='verdict no';v.textContent='✗ Not quite. Check the format AVIANS{...} and try another hint.'}
+  };
+  fb.appendChild(form); fb.appendChild(v); m.appendChild(fb);
+
+  $('#scrim').classList.add('open'); document.body.style.overflow='hidden';
+}
+function close(){$('#scrim').classList.remove('open');document.body.style.overflow=''}
+$('#scrim').onclick=e=>{if(e.target===$('#scrim'))close()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+
+score();rail();grid();
+</script>
