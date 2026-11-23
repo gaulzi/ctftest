@@ -1,0 +1,12 @@
+TLP:CLEAR - Sector threat intelligence (fictional training data)
+Actor: "TOWER JACKAL" - targets airport ground handling and ATC support systems.
+
+Indicators for the "JackalLoader" implant:
+  * Creates mutex:  Global\AVX-Tower-Mutex-7741        (ASCII string)
+  * Contains config marker bytes:  DE AD C0 DE 7A 11 F1 A9
+
+A sample is considered JackalLoader ONLY if BOTH indicators are present.
+Other samples containing only one of them belong to unrelated tooling.
+
+Task: 50 binaries were quarantined from the baggage handling servers.
+Find the JackalLoader sample.

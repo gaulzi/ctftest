@@ -1,0 +1,659 @@
+[#1 (F:131.725 L:-30 E:0) 14/11/2026 16:01:21 --------------------------------
+Mode : 2 Label : 5Z Id : 7 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN1031
+No: M16A
+CREW REQUEST CATERING 2 VEG MEALS
+
+[#1 (F:131.725 L:-39 E:0) 14/11/2026 16:01:45 --------------------------------
+Mode : 2 Label : _d Id : 3 Ack : NAK
+Aircraft reg: .G-EUYT Flight id: SN3913
+No: M81A
+OUT 1012 OFF 1019 FOB 0084
+
+[#4 (F:131.725 L:-20 E:0) 14/11/2026 16:02:48 --------------------------------
+Mode : 2 Label : QA Id : 9 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN1171
+No: M23A
+OUT 1012 OFF 1019 FOB 0084
+
+[#1 (F:131.725 L:-25 E:0) 14/11/2026 16:04:39 --------------------------------
+Mode : 2 Label : B9 Id : 1 Ack : NAK
+Aircraft reg: .OO-TCH Flight id: SN0462
+No: M69A
+ETA 1342 FUEL 4.2T
+
+[#2 (F:131.725 L:-24 E:0) 14/11/2026 16:05:17 --------------------------------
+Mode : 2 Label : SA Id : 9 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN0306
+No: M52A
+ON 1254 IN 1301 FOB 0032
+
+[#1 (F:131.725 L:-38 E:0) 14/11/2026 16:06:26 --------------------------------
+Mode : 2 Label : 5Z Id : 5 Ack : NAK
+Aircraft reg: .OO-SSU Flight id: SN0705
+No: M53A
+CREW REQUEST CATERING 2 VEG MEALS
+
+[#3 (F:131.725 L:-34 E:0) 14/11/2026 16:06:52 --------------------------------
+Mode : 2 Label : _d Id : 1 Ack : NAK
+Aircraft reg: .G-EUYT Flight id: SN2083
+No: M83A
+ATIS EBBR INFO K RWY 25R ARR 25L DEP
+
+[#3 (F:131.725 L:-27 E:0) 14/11/2026 16:07:53 --------------------------------
+Mode : 2 Label : B9 Id : 9 Ack : NAK
+Aircraft reg: .OO-TCH Flight id: SN0912
+No: M41A
+METAR EBBR 141050Z 24012KT 9999 FEW030 09/04 Q1018 NOSIG
+
+[#4 (F:131.725 L:-40 E:0) 14/11/2026 16:08:39 --------------------------------
+Mode : 2 Label : Q0 Id : 5 Ack : NAK
+Aircraft reg: .PH-BXA Flight id: SN3241
+No: M33A
+CREW REQUEST CATERING 2 VEG MEALS
+
+[#2 (F:131.725 L:-30 E:0) 14/11/2026 16:09:46 --------------------------------
+Mode : 2 Label : H1 Id : 5 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN2364
+No: M38A
+OUT 1012 OFF 1019 FOB 0084
+
+[#4 (F:131.725 L:-23 E:0) 14/11/2026 16:10:11 --------------------------------
+Mode : 2 Label : H1 Id : 8 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN2531
+No: M49A
+OUT 1012 OFF 1019 FOB 0084
+
+[#4 (F:131.725 L:-25 E:0) 14/11/2026 16:11:03 --------------------------------
+Mode : 2 Label : B9 Id : 6 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN0797
+No: M43A
+METAR EBBR 141050Z 24012KT 9999 FEW030 09/04 Q1018 NOSIG
+
+[#1 (F:131.725 L:-22 E:0) 14/11/2026 16:11:44 --------------------------------
+Mode : 2 Label : H1 Id : 8 Ack : NAK
+Aircraft reg: .OO-TCH Flight id: SN0960
+No: M44A
+CREW REQUEST CATERING 2 VEG MEALS
+
+[#1 (F:131.725 L:-29 E:0) 14/11/2026 16:12:23 --------------------------------
+Mode : 2 Label : B9 Id : 7 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN0525
+No: M61A
+MAINT: APU FAULT CODE 49-61-42 DEFERRED MEL 49-01
+
+[#3 (F:131.725 L:-24 E:0) 14/11/2026 16:13:34 --------------------------------
+Mode : 2 Label : 80 Id : 6 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN0810
+No: M34A
+GATE B24 STAND 214
+
+[#4 (F:131.725 L:-20 E:0) 14/11/2026 16:14:58 --------------------------------
+Mode : 2 Label : 80 Id : 5 Ack : NAK
+Aircraft reg: .PH-BXA Flight id: SN2717
+No: M40A
+ETA 1342 FUEL 4.2T
+
+[#3 (F:131.725 L:-32 E:0) 14/11/2026 16:16:48 --------------------------------
+Mode : 2 Label : B9 Id : 6 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN3312
+No: M74A
+/BRUOPXA.REQ WX EBBR
+
+[#4 (F:131.725 L:-38 E:0) 14/11/2026 16:18:07 --------------------------------
+Mode : 2 Label : 5Z Id : 8 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN0873
+No: M85A
+ON 1254 IN 1301 FOB 0032
+
+[#3 (F:131.725 L:-26 E:0) 14/11/2026 16:19:19 --------------------------------
+Mode : 2 Label : H1 Id : 7 Ack : NAK
+Aircraft reg: .PH-BXA Flight id: SN1938
+No: M25A
+GATE B24 STAND 214
+
+[#4 (F:131.725 L:-36 E:0) 14/11/2026 16:20:50 --------------------------------
+Mode : 2 Label : Q0 Id : 9 Ack : NAK
+Aircraft reg: .PH-BXA Flight id: SN1278
+No: M30A
+ATIS EBBR INFO K RWY 25R ARR 25L DEP
+
+[#2 (F:131.725 L:-37 E:0) 14/11/2026 16:21:23 --------------------------------
+Mode : 2 Label : _d Id : 9 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN0073
+No: M61A
+GATE B24 STAND 214
+
+[#4 (F:131.725 L:-30 E:0) 14/11/2026 16:22:18 --------------------------------
+Mode : 2 Label : B9 Id : 3 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN2772
+No: M70A
+ETA 1342 FUEL 4.2T
+
+[#1 (F:131.725 L:-20 E:0) 14/11/2026 16:24:05 --------------------------------
+Mode : 2 Label : H1 Id : 3 Ack : NAK
+Aircraft reg: .G-EUYT Flight id: SN2702
+No: M17A
+REQ GATE ASSIGNMENT
+
+[#2 (F:131.725 L:-23 E:0) 14/11/2026 16:25:21 --------------------------------
+Mode : 2 Label : QA Id : 6 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN0989
+No: M89A
+METAR EBBR 141050Z 24012KT 9999 FEW030 09/04 Q1018 NOSIG
+
+[#2 (F:131.725 L:-37 E:0) 14/11/2026 16:27:02 --------------------------------
+Mode : 2 Label : _d Id : 4 Ack : NAK
+Aircraft reg: .OO-SSU Flight id: SN2149
+No: M28A
+ON 1254 IN 1301 FOB 0032
+
+[#1 (F:131.725 L:-31 E:0) 14/11/2026 16:27:34 --------------------------------
+Mode : 2 Label : H1 Id : 2 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN0833
+No: M59A
+GATE B24 STAND 214
+
+[#1 (F:131.725 L:-27 E:0) 14/11/2026 16:27:45 --------------------------------
+Mode : 2 Label : QA Id : 4 Ack : NAK
+Aircraft reg: .F-HBXE Flight id: SN2743
+No: M37A
+REQ GATE ASSIGNMENT
+
+[#1 (F:131.725 L:-32 E:0) 14/11/2026 16:29:36 --------------------------------
+Mode : 2 Label : SA Id : 5 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN2097
+No: M69A
+/BRUOPXA.REQ WX EBBR
+
+[#2 (F:131.725 L:-23 E:0) 14/11/2026 16:30:59 --------------------------------
+Mode : 2 Label : Q0 Id : 3 Ack : NAK
+Aircraft reg: .OO-SSU Flight id: SN0521
+No: M70A
+REQ GATE ASSIGNMENT
+
+[#4 (F:131.725 L:-22 E:0) 14/11/2026 16:32:44 --------------------------------
+Mode : 2 Label : H1 Id : 5 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN3453
+No: M42A
+PAX COUNT 168 + 2 INF
+
+[#3 (F:131.725 L:-33 E:0) 14/11/2026 16:32:58 --------------------------------
+Mode : 2 Label : 5Z Id : 2 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN0671
+No: M71A
+ATIS EBBR INFO K RWY 25R ARR 25L DEP
+
+[#4 (F:131.725 L:-27 E:0) 14/11/2026 16:34:38 --------------------------------
+Mode : 2 Label : 5Z Id : 2 Ack : NAK
+Aircraft reg: .PH-BXA Flight id: SN0272
+No: M66A
+REQ GATE ASSIGNMENT
+
+[#2 (F:131.725 L:-22 E:0) 14/11/2026 16:36:31 --------------------------------
+Mode : 2 Label : SA Id : 7 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN2274
+No: M14A
+/BRUOPXA.REQ WX EBBR
+
+[#1 (F:131.725 L:-25 E:0) 14/11/2026 16:37:02 --------------------------------
+Mode : 2 Label : H1 Id : 1 Ack : NAK
+Aircraft reg: .PH-BXA Flight id: SN1413
+No: M42A
+MAINT: APU FAULT CODE 49-61-42 DEFERRED MEL 49-01
+
+[#3 (F:131.725 L:-23 E:0) 14/11/2026 16:38:42 --------------------------------
+Mode : 2 Label : B9 Id : 4 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN3362
+No: M72A
+ATIS EBBR INFO K RWY 25R ARR 25L DEP
+
+[#2 (F:131.725 L:-22 E:0) 14/11/2026 16:40:42 --------------------------------
+Mode : 2 Label : _d Id : 8 Ack : NAK
+Aircraft reg: .OO-SSU Flight id: SN1571
+No: M76A
+CREW REQUEST CATERING 2 VEG MEALS
+
+[#3 (F:131.725 L:-26 E:0) 14/11/2026 16:41:57 --------------------------------
+Mode : 2 Label : 5Z Id : 2 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN0163
+No: M31A
+GATE B24 STAND 214
+
+[#3 (F:131.725 L:-39 E:0) 14/11/2026 16:42:37 --------------------------------
+Mode : 2 Label : B9 Id : 3 Ack : NAK
+Aircraft reg: .OO-TCH Flight id: SN2800
+No: M17A
+MAINT: APU FAULT CODE 49-61-42 DEFERRED MEL 49-01
+
+[#3 (F:131.725 L:-39 E:0) 14/11/2026 16:44:17 --------------------------------
+Mode : 2 Label : SA Id : 7 Ack : NAK
+Aircraft reg: .PH-BXA Flight id: SN3896
+No: M48A
+/BRUOPXA.REQ WX EBBR
+
+[#2 (F:131.725 L:-35 E:0) 14/11/2026 16:45:12 --------------------------------
+Mode : 2 Label : QA Id : 8 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN3169
+No: M25A
+/BRUOPXA.REQ WX EBBR
+
+[#3 (F:131.725 L:-35 E:0) 14/11/2026 16:46:26 --------------------------------
+Mode : 2 Label : _d Id : 9 Ack : NAK
+Aircraft reg: .PH-BXA Flight id: SN0233
+No: M33A
+ETA 1342 FUEL 4.2T
+
+[#3 (F:131.725 L:-29 E:0) 14/11/2026 16:47:31 --------------------------------
+Mode : 2 Label : 80 Id : 3 Ack : NAK
+Aircraft reg: .OO-JAQ Flight id: SN3043
+No: M67A
+REQ GATE ASSIGNMENT
+
+[#3 (F:131.725 L:-38 E:0) 14/11/2026 16:49:21 --------------------------------
+Mode : 2 Label : Q0 Id : 3 Ack : NAK
+Aircraft reg: .OO-TCH Flight id: SN0187
+No: M26A
+GATE B24 STAND 214
+
+[#4 (F:131.725 L:-23 E:0) 14/11/2026 16:50:34 --------------------------------
+Mode : 2 Label : Q0 Id : 1 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN1218
+No: M32A
+ON 1254 IN 1301 FOB 0032
+
+[#3 (F:131.725 L:-28 E:0) 14/11/2026 16:51:37 --------------------------------
+Mode : 2 Label : 80 Id : 5 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN1677
+No: M75A
+CREW REQUEST CATERING 2 VEG MEALS
+
+[#3 (F:131.725 L:-39 E:0) 14/11/2026 16:53:03 --------------------------------
+Mode : 2 Label : B9 Id : 6 Ack : NAK
+Aircraft reg: .OO-SSU Flight id: SN0708
+No: M57A
+CREW REQUEST CATERING 2 VEG MEALS
+
+[#4 (F:131.725 L:-31 E:0) 14/11/2026 16:54:51 --------------------------------
+Mode : 2 Label : 5Z Id : 3 Ack : NAK
+Aircraft reg: .OO-TCH Flight id: SN0194
+No: M84A
+/BRUOPXA.REQ WX EBBR
+
+[#2 (F:131.725 L:-20 E:0) 14/11/2026 16:56:02 --------------------------------
+Mode : 2 Label : 80 Id : 4 Ack : NAK
+Aircraft reg: .OO-JAQ Flight id: SN1679
+No: M79A
+PAX COUNT 168 + 2 INF
+
+[#1 (F:131.725 L:-37 E:0) 14/11/2026 16:56:54 --------------------------------
+Mode : 2 Label : Q0 Id : 7 Ack : NAK
+Aircraft reg: .OO-SSU Flight id: SN3330
+No: M40A
+MAINT: APU FAULT CODE 49-61-42 DEFERRED MEL 49-01
+
+[#1 (F:131.725 L:-34 E:0) 14/11/2026 16:57:56 --------------------------------
+Mode : 2 Label : SA Id : 6 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN0502
+No: M29A
+PAX COUNT 168 + 2 INF
+
+[#3 (F:131.725 L:-36 E:0) 14/11/2026 16:59:08 --------------------------------
+Mode : 2 Label : B9 Id : 3 Ack : NAK
+Aircraft reg: .OO-JAQ Flight id: SN3534
+No: M10A
+OUT 1012 OFF 1019 FOB 0084
+
+[#2 (F:131.725 L:-37 E:0) 14/11/2026 17:00:00 --------------------------------
+Mode : 2 Label : B9 Id : 5 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN2349
+No: M82A
+MAINT: APU FAULT CODE 49-61-42 DEFERRED MEL 49-01
+
+[#3 (F:131.725 L:-31 E:0) 14/11/2026 17:00:53 --------------------------------
+Mode : 2 Label : QA Id : 7 Ack : NAK
+Aircraft reg: .OO-JAQ Flight id: SN1984
+No: M54A
+ETA 1342 FUEL 4.2T
+
+[#2 (F:131.725 L:-40 E:0) 14/11/2026 17:01:13 --------------------------------
+Mode : 2 Label : SA Id : 1 Ack : NAK
+Aircraft reg: .OO-SSU Flight id: SN3149
+No: M52A
+ATIS EBBR INFO K RWY 25R ARR 25L DEP
+
+[#3 (F:131.725 L:-30 E:0) 14/11/2026 17:02:00 --------------------------------
+Mode : 2 Label : 5Z Id : 7 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN3209
+No: M28A
+ATIS EBBR INFO K RWY 25R ARR 25L DEP
+
+[#3 (F:131.725 L:-38 E:0) 14/11/2026 17:03:39 --------------------------------
+Mode : 2 Label : 80 Id : 5 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN2994
+No: M97A
+/BRUOPXA.REQ WX EBBR
+
+[#3 (F:131.725 L:-39 E:0) 14/11/2026 17:05:30 --------------------------------
+Mode : 2 Label : Q0 Id : 8 Ack : NAK
+Aircraft reg: .PH-BXA Flight id: SN1323
+No: M34A
+REQ GATE ASSIGNMENT
+
+[#3 (F:131.725 L:-23 E:0) 14/11/2026 17:07:19 --------------------------------
+Mode : 2 Label : H1 Id : 4 Ack : NAK
+Aircraft reg: .OO-SSU Flight id: SN2247
+No: M49A
+FREETEXT Tebhaq: ybpxobk pbqr sbe unatne 3 vf va gur abgr -> NIVNAF{npnef_vf_abg_rapelcgrq}
+
+[#2 (F:131.725 L:-22 E:0) 14/11/2026 17:08:43 --------------------------------
+Mode : 2 Label : H1 Id : 6 Ack : NAK
+Aircraft reg: .OO-TCH Flight id: SN2055
+No: M70A
+ATIS EBBR INFO K RWY 25R ARR 25L DEP
+
+[#2 (F:131.725 L:-23 E:0) 14/11/2026 17:09:51 --------------------------------
+Mode : 2 Label : 5Z Id : 2 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN3952
+No: M92A
+OUT 1012 OFF 1019 FOB 0084
+
+[#3 (F:131.725 L:-30 E:0) 14/11/2026 17:10:46 --------------------------------
+Mode : 2 Label : SA Id : 7 Ack : NAK
+Aircraft reg: .OO-JAQ Flight id: SN1780
+No: M13A
+OUT 1012 OFF 1019 FOB 0084
+
+[#1 (F:131.725 L:-33 E:0) 14/11/2026 17:11:15 --------------------------------
+Mode : 2 Label : SA Id : 6 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN1208
+No: M71A
+GATE B24 STAND 214
+
+[#2 (F:131.725 L:-26 E:0) 14/11/2026 17:11:59 --------------------------------
+Mode : 2 Label : 80 Id : 9 Ack : NAK
+Aircraft reg: .OO-TCH Flight id: SN0251
+No: M36A
+OUT 1012 OFF 1019 FOB 0084
+
+[#1 (F:131.725 L:-31 E:0) 14/11/2026 17:12:32 --------------------------------
+Mode : 2 Label : Q0 Id : 7 Ack : NAK
+Aircraft reg: .OO-SSU Flight id: SN2794
+No: M52A
+ON 1254 IN 1301 FOB 0032
+
+[#3 (F:131.725 L:-36 E:0) 14/11/2026 17:13:41 --------------------------------
+Mode : 2 Label : SA Id : 8 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN1761
+No: M53A
+ON 1254 IN 1301 FOB 0032
+
+[#2 (F:131.725 L:-30 E:0) 14/11/2026 17:14:23 --------------------------------
+Mode : 2 Label : QA Id : 2 Ack : NAK
+Aircraft reg: .OO-TCH Flight id: SN0618
+No: M77A
+GATE B24 STAND 214
+
+[#3 (F:131.725 L:-36 E:0) 14/11/2026 17:16:06 --------------------------------
+Mode : 2 Label : _d Id : 7 Ack : NAK
+Aircraft reg: .F-HBXE Flight id: SN3171
+No: M53A
+OUT 1012 OFF 1019 FOB 0084
+
+[#4 (F:131.725 L:-39 E:0) 14/11/2026 17:17:36 --------------------------------
+Mode : 2 Label : SA Id : 5 Ack : NAK
+Aircraft reg: .F-HBXE Flight id: SN0720
+No: M33A
+METAR EBBR 141050Z 24012KT 9999 FEW030 09/04 Q1018 NOSIG
+
+[#3 (F:131.725 L:-26 E:0) 14/11/2026 17:18:49 --------------------------------
+Mode : 2 Label : H1 Id : 3 Ack : NAK
+Aircraft reg: .OO-SSU Flight id: SN1449
+No: M28A
+METAR EBBR 141050Z 24012KT 9999 FEW030 09/04 Q1018 NOSIG
+
+[#2 (F:131.725 L:-20 E:0) 14/11/2026 17:19:20 --------------------------------
+Mode : 2 Label : B9 Id : 8 Ack : NAK
+Aircraft reg: .F-HBXE Flight id: SN2218
+No: M41A
+METAR EBBR 141050Z 24012KT 9999 FEW030 09/04 Q1018 NOSIG
+
+[#2 (F:131.725 L:-40 E:0) 14/11/2026 17:19:54 --------------------------------
+Mode : 2 Label : 5Z Id : 1 Ack : NAK
+Aircraft reg: .G-EUYT Flight id: SN2964
+No: M85A
+METAR EBBR 141050Z 24012KT 9999 FEW030 09/04 Q1018 NOSIG
+
+[#1 (F:131.725 L:-28 E:0) 14/11/2026 17:20:55 --------------------------------
+Mode : 2 Label : 5Z Id : 4 Ack : NAK
+Aircraft reg: .PH-BXA Flight id: SN2118
+No: M65A
+PAX COUNT 168 + 2 INF
+
+[#4 (F:131.725 L:-25 E:0) 14/11/2026 17:22:39 --------------------------------
+Mode : 2 Label : 5Z Id : 3 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN1960
+No: M93A
+OUT 1012 OFF 1019 FOB 0084
+
+[#3 (F:131.725 L:-20 E:0) 14/11/2026 17:24:23 --------------------------------
+Mode : 2 Label : _d Id : 3 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN0208
+No: M12A
+CREW REQUEST CATERING 2 VEG MEALS
+
+[#2 (F:131.725 L:-38 E:0) 14/11/2026 17:24:45 --------------------------------
+Mode : 2 Label : 80 Id : 9 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN1027
+No: M81A
+ETA 1342 FUEL 4.2T
+
+[#4 (F:131.725 L:-38 E:0) 14/11/2026 17:25:32 --------------------------------
+Mode : 2 Label : B9 Id : 7 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN1643
+No: M88A
+OUT 1012 OFF 1019 FOB 0084
+
+[#2 (F:131.725 L:-23 E:0) 14/11/2026 17:27:06 --------------------------------
+Mode : 2 Label : QA Id : 5 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN1438
+No: M75A
+REQ GATE ASSIGNMENT
+
+[#4 (F:131.725 L:-38 E:0) 14/11/2026 17:28:40 --------------------------------
+Mode : 2 Label : 80 Id : 5 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN3913
+No: M43A
+ATIS EBBR INFO K RWY 25R ARR 25L DEP
+
+[#4 (F:131.725 L:-22 E:0) 14/11/2026 17:30:21 --------------------------------
+Mode : 2 Label : B9 Id : 2 Ack : NAK
+Aircraft reg: .F-HBXE Flight id: SN0537
+No: M55A
+MAINT: APU FAULT CODE 49-61-42 DEFERRED MEL 49-01
+
+[#1 (F:131.725 L:-21 E:0) 14/11/2026 17:32:10 --------------------------------
+Mode : 2 Label : 80 Id : 5 Ack : NAK
+Aircraft reg: .G-EUYT Flight id: SN2744
+No: M58A
+CREW REQUEST CATERING 2 VEG MEALS
+
+[#4 (F:131.725 L:-23 E:0) 14/11/2026 17:32:28 --------------------------------
+Mode : 2 Label : H1 Id : 5 Ack : NAK
+Aircraft reg: .PH-BXA Flight id: SN1071
+No: M91A
+MAINT: APU FAULT CODE 49-61-42 DEFERRED MEL 49-01
+
+[#1 (F:131.725 L:-33 E:0) 14/11/2026 17:33:56 --------------------------------
+Mode : 2 Label : 5Z Id : 8 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN3522
+No: M56A
+ETA 1342 FUEL 4.2T
+
+[#1 (F:131.725 L:-22 E:0) 14/11/2026 17:35:15 --------------------------------
+Mode : 2 Label : QA Id : 6 Ack : NAK
+Aircraft reg: .G-EUYT Flight id: SN1010
+No: M32A
+ETA 1342 FUEL 4.2T
+
+[#4 (F:131.725 L:-26 E:0) 14/11/2026 17:36:15 --------------------------------
+Mode : 2 Label : 80 Id : 9 Ack : NAK
+Aircraft reg: .G-EUYT Flight id: SN3559
+No: M71A
+PAX COUNT 168 + 2 INF
+
+[#3 (F:131.725 L:-22 E:0) 14/11/2026 17:37:33 --------------------------------
+Mode : 2 Label : QA Id : 7 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN0452
+No: M53A
+/BRUOPXA.REQ WX EBBR
+
+[#1 (F:131.725 L:-21 E:0) 14/11/2026 17:38:44 --------------------------------
+Mode : 2 Label : B9 Id : 9 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN2320
+No: M77A
+GATE B24 STAND 214
+
+[#4 (F:131.725 L:-24 E:0) 14/11/2026 17:40:01 --------------------------------
+Mode : 2 Label : _d Id : 5 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN2975
+No: M86A
+PAX COUNT 168 + 2 INF
+
+[#3 (F:131.725 L:-23 E:0) 14/11/2026 17:40:29 --------------------------------
+Mode : 2 Label : B9 Id : 6 Ack : NAK
+Aircraft reg: .PH-BXA Flight id: SN0184
+No: M77A
+CREW REQUEST CATERING 2 VEG MEALS
+
+[#4 (F:131.725 L:-26 E:0) 14/11/2026 17:42:06 --------------------------------
+Mode : 2 Label : QA Id : 5 Ack : NAK
+Aircraft reg: .OO-TCH Flight id: SN3695
+No: M81A
+CREW REQUEST CATERING 2 VEG MEALS
+
+[#3 (F:131.725 L:-39 E:0) 14/11/2026 17:42:17 --------------------------------
+Mode : 2 Label : H1 Id : 9 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN2165
+No: M42A
+CREW REQUEST CATERING 2 VEG MEALS
+
+[#1 (F:131.725 L:-33 E:0) 14/11/2026 17:43:06 --------------------------------
+Mode : 2 Label : QA Id : 3 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN2314
+No: M40A
+ETA 1342 FUEL 4.2T
+
+[#1 (F:131.725 L:-35 E:0) 14/11/2026 17:43:43 --------------------------------
+Mode : 2 Label : Q0 Id : 8 Ack : NAK
+Aircraft reg: .G-EUYT Flight id: SN2130
+No: M85A
+CREW REQUEST CATERING 2 VEG MEALS
+
+[#2 (F:131.725 L:-32 E:0) 14/11/2026 17:45:01 --------------------------------
+Mode : 2 Label : QA Id : 8 Ack : NAK
+Aircraft reg: .F-HBXE Flight id: SN2270
+No: M70A
+METAR EBBR 141050Z 24012KT 9999 FEW030 09/04 Q1018 NOSIG
+
+[#3 (F:131.725 L:-35 E:0) 14/11/2026 17:46:01 --------------------------------
+Mode : 2 Label : QA Id : 7 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN1301
+No: M79A
+PAX COUNT 168 + 2 INF
+
+[#2 (F:131.725 L:-32 E:0) 14/11/2026 17:47:41 --------------------------------
+Mode : 2 Label : 80 Id : 8 Ack : NAK
+Aircraft reg: .OO-JAQ Flight id: SN3946
+No: M61A
+MAINT: APU FAULT CODE 49-61-42 DEFERRED MEL 49-01
+
+[#4 (F:131.725 L:-30 E:0) 14/11/2026 17:48:39 --------------------------------
+Mode : 2 Label : H1 Id : 8 Ack : NAK
+Aircraft reg: .OO-JAQ Flight id: SN3490
+No: M23A
+GATE B24 STAND 214
+
+[#2 (F:131.725 L:-23 E:0) 14/11/2026 17:50:39 --------------------------------
+Mode : 2 Label : 5Z Id : 1 Ack : NAK
+Aircraft reg: .F-HBXE Flight id: SN3236
+No: M62A
+METAR EBBR 141050Z 24012KT 9999 FEW030 09/04 Q1018 NOSIG
+
+[#2 (F:131.725 L:-34 E:0) 14/11/2026 17:50:49 --------------------------------
+Mode : 2 Label : QA Id : 4 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN0256
+No: M16A
+/BRUOPXA.REQ WX EBBR
+
+[#3 (F:131.725 L:-32 E:0) 14/11/2026 17:52:22 --------------------------------
+Mode : 2 Label : B9 Id : 9 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN3958
+No: M96A
+/BRUOPXA.REQ WX EBBR
+
+[#3 (F:131.725 L:-33 E:0) 14/11/2026 17:53:42 --------------------------------
+Mode : 2 Label : SA Id : 7 Ack : NAK
+Aircraft reg: .OO-SSU Flight id: SN0595
+No: M46A
+OUT 1012 OFF 1019 FOB 0084
+
+[#1 (F:131.725 L:-26 E:0) 14/11/2026 17:54:39 --------------------------------
+Mode : 2 Label : B9 Id : 5 Ack : NAK
+Aircraft reg: .G-EUYT Flight id: SN1879
+No: M75A
+REQ GATE ASSIGNMENT
+
+[#3 (F:131.725 L:-34 E:0) 14/11/2026 17:55:33 --------------------------------
+Mode : 2 Label : _d Id : 3 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN2050
+No: M35A
+MAINT: APU FAULT CODE 49-61-42 DEFERRED MEL 49-01
+
+[#2 (F:131.725 L:-21 E:0) 14/11/2026 17:57:16 --------------------------------
+Mode : 2 Label : H1 Id : 4 Ack : NAK
+Aircraft reg: .OO-TCH Flight id: SN0423
+No: M98A
+ON 1254 IN 1301 FOB 0032
+
+[#4 (F:131.725 L:-33 E:0) 14/11/2026 17:58:45 --------------------------------
+Mode : 2 Label : SA Id : 3 Ack : NAK
+Aircraft reg: .D-AINK Flight id: SN1633
+No: M52A
+MAINT: APU FAULT CODE 49-61-42 DEFERRED MEL 49-01
+
+[#1 (F:131.725 L:-27 E:0) 14/11/2026 18:00:26 --------------------------------
+Mode : 2 Label : SA Id : 7 Ack : NAK
+Aircraft reg: .F-HBXE Flight id: SN3601
+No: M60A
+OUT 1012 OFF 1019 FOB 0084
+
+[#4 (F:131.725 L:-30 E:0) 14/11/2026 18:01:17 --------------------------------
+Mode : 2 Label : B9 Id : 5 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN1087
+No: M42A
+ETA 1342 FUEL 4.2T
+
+[#1 (F:131.725 L:-24 E:0) 14/11/2026 18:01:57 --------------------------------
+Mode : 2 Label : H1 Id : 1 Ack : NAK
+Aircraft reg: .OO-SNE Flight id: SN2363
+No: M58A
+ON 1254 IN 1301 FOB 0032
+
+[#2 (F:131.725 L:-25 E:0) 14/11/2026 18:02:49 --------------------------------
+Mode : 2 Label : Q0 Id : 2 Ack : NAK
+Aircraft reg: .PH-BXA Flight id: SN1466
+No: M74A
+OUT 1012 OFF 1019 FOB 0084
+
+[#1 (F:131.725 L:-21 E:0) 14/11/2026 18:04:12 --------------------------------
+Mode : 2 Label : 80 Id : 2 Ack : NAK
+Aircraft reg: .OO-SSU Flight id: SN2649
+No: M85A
+ATIS EBBR INFO K RWY 25R ARR 25L DEP
+
+[#3 (F:131.725 L:-34 E:0) 14/11/2026 18:05:51 --------------------------------
+Mode : 2 Label : Q0 Id : 9 Ack : NAK
+Aircraft reg: .OO-SNA Flight id: SN0684
+No: M43A
+OUT 1012 OFF 1019 FOB 0084

@@ -1,0 +1,13 @@
+================================================================
+  AVIANS PRACTICE AIRLINES                 BOARDING PASS
+================================================================
+  PASSENGER : DEFENDER/BLUE TEAM MR
+  FLIGHT    : AV1337        DATE : 30NOV26
+  FROM      : EBBR BRUSSELS
+  TO        : CTF  CAPTURE THE FLAG
+  GATE      : B42           SEAT : 1A
+  BOARDING  : 0900          CLASS: Z
+----------------------------------------------------------------
+  SECURITY CODE (encoded, do not lose):
+  QVZJQU5Te3dlbGNvbWVfYWJvYXJkX2NsZWFyZWRfZm9yX3Rha2VvZmZ9
+================================================================
