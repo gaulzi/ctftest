@@ -1,0 +1,2 @@
+A VDL Mode 2 intercept, wrapped in several layers of encoding.
+Let CyberChef's 'Magic' peel it, or unwrap it by hand.

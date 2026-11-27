@@ -1,0 +1,2 @@
+A one-page PDF that looks empty. Objects can hold compressed streams that
+never get drawn. Enumerate the objects and inflate the streams.

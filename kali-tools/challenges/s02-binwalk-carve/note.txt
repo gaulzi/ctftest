@@ -1,0 +1,1 @@
+A raw image pulled from a dashboard flash chip. Several files are hiding in it.

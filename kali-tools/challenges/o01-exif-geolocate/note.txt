@@ -1,0 +1,3 @@
+A crew member posted this 'harmless' apron photo. It carries GPS metadata.
+Read the coordinates, find the airport, and submit its 4-letter ICAO code as the flag,
+e.g. AVIANS{XXXX}.

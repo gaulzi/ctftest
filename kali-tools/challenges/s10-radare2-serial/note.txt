@@ -1,0 +1,2 @@
+An avionics licence-key checker. There is no stored key to compare against -
+it validates with arithmetic. Reverse the checks and craft a key it accepts.

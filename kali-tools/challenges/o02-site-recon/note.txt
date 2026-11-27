@@ -1,0 +1,4 @@
+You mirrored a small public site (extract mirror.tar.gz).
+The current files look clean - but recon is about what's left behind.
+Check robots.txt, then dig. (The flag was committed once and 'removed' later;
+git history remembers. Tools: git log/show, or gitleaks/trufflehog.)

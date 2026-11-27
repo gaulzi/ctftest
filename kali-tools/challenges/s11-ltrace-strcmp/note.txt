@@ -1,0 +1,2 @@
+A ramp-agent auth binary. It compares your input to a secret.
+Don't reverse the maths - just watch the library calls it makes.

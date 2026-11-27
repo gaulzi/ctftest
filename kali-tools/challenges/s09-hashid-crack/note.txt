@@ -1,0 +1,2 @@
+An unknown hash dumped from a device. Identify the algorithm first,
+then crack it. The flag is AVIANS{recovered_password}.

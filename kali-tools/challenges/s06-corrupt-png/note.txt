@@ -1,0 +1,3 @@
+This screenshot won't open - the file header is damaged.
+A healthy PNG starts with the magic bytes 89 50 4E 47 0D 0A 1A 0A.
+Repair the header in a hex editor and the image will render.

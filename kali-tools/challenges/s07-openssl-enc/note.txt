@@ -1,0 +1,2 @@
+Encrypted with OpenSSL (AES-256-CBC, PBKDF2). The passphrase is a weak,
+aviation-flavoured word that is in the provided wordlist. Brute it with openssl.

@@ -1,0 +1,2 @@
+A file was pulled off the ops server over plain HTTP.
+Carve the transferred file out of the capture, then open it.
