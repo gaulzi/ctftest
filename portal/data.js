@@ -1,4 +1,4 @@
-// Challenge catalogue for the Avians practice CTF.
+// Challenge catalogue for the HostBusters practice CTF.
 // Files live under ../challenges/<id>/ when served from a web server.
 window.CATEGORIES = [
   { id: "preflight", name: "Pre-flight", blurb: "Kali basics: identify, decode and search files. Start here." },
@@ -48,14 +48,14 @@ window.CHALLENGES = [
     {name:"grep", why:"Filters the output.", cmd:"strings fmc_firmware.bin | grep -i password"}
   ],
   learn:"Binaries still contain readable text: error strings, paths, URLs, sometimes credentials. 'strings' is always an early move on an unknown file. Use 'strings -n 8' to cut noise.",
-  hints:["strings prints a lot — pipe into grep.","Search for 'password', or for the flag prefix AVIANS{","strings fmc_firmware.bin | grep -iE 'password|avians'"],
-  solve:"strings fmc_firmware.bin | grep -iE 'password|AVIANS'   # take the complete AVIANS{...} line"
+  hints:["strings prints a lot — pipe into grep.","Search for 'password', or for the flag prefix HOSTBUSTERS{","strings fmc_firmware.bin | grep -iE 'password|hostbusters'"],
+  solve:"strings fmc_firmware.bin | grep -iE 'password|HOSTBUSTERS'   # take the complete HOSTBUSTERS{...} line"
 },
 {
   id:"04-ftp-ground-ops", cat:"network", title:"Ground Ops FTP", diff:1, points:100,
   files:["ground_ops.pcap"],
   story:"The fuel team still uploads uplift sheets over plain FTP. Here is a capture from the ground-ops VLAN.",
-  question:"What password did the user log in with? Submit as AVIANS{password}.",
+  question:"What password did the user log in with? Submit as HOSTBUSTERS{password}.",
   tools:[
     {name:"Wireshark", why:"Open the pcap, filter, and follow streams.", cmd:"wireshark ground_ops.pcap &"},
     {name:"tshark", why:"Wireshark on the command line.", cmd:"tshark -r ground_ops.pcap -Y ftp"}
@@ -75,8 +75,8 @@ window.CHALLENGES = [
     {name:"tshark", why:"List HTTP requests quickly.", cmd:"tshark -r terminal_b_workstation.pcap -Y http.request -T fields -e ip.dst -e http.host -e http.request.method"}
   ],
   learn:"For exfil, start with the big picture: which internal host talks to which external IP, and how much leaves. Internal 10.x traffic is usually fine; a POST to an unknown domain is the red flag. Export Objects recovers the actual file so you can say what data left.",
-  hints:["Statistics → Conversations → which peer is outside 10.0.0.0/8?","Filter: http.request.method==\"POST\"","Export Objects → HTTP, save the CSV, then grep AVIANS"],
-  solve:"tshark -r terminal_b_workstation.pcap -Y 'http.request.method==\"POST\"' -T fields -e ip.dst -e http.host\nmkdir ex && tshark -r terminal_b_workstation.pcap --export-objects http,ex && grep -r AVIANS ex"
+  hints:["Statistics → Conversations → which peer is outside 10.0.0.0/8?","Filter: http.request.method==\"POST\"","Export Objects → HTTP, save the CSV, then grep HOSTBUSTERS"],
+  solve:"tshark -r terminal_b_workstation.pcap -Y 'http.request.method==\"POST\"' -T fields -e ip.dst -e http.host\nmkdir ex && tshark -r terminal_b_workstation.pcap --export-objects http,ex && grep -r HOSTBUSTERS ex"
 },
 {
   id:"06-dns-contrails", cat:"network", title:"DNS Contrails", diff:3, points:200,
@@ -96,7 +96,7 @@ window.CHALLENGES = [
   id:"07-radar-sweep", cat:"network", title:"Radar Sweep", diff:2, points:150,
   files:["baggage_ot_segment.pcap"],
   story:"The baggage system's OT network was port-scanned from the internet. You need who scanned and what they found open.",
-  question:"Submit AVIANS{scanner_ip:open_port}, e.g. AVIANS{192.0.2.1:22}.",
+  question:"Submit HOSTBUSTERS{scanner_ip:open_port}, e.g. HOSTBUSTERS{192.0.2.1:22}.",
   tools:[
     {name:"Statistics → Conversations", why:"One IP hitting hundreds of ports stands out.", cmd:"Statistics → Conversations → TCP"},
     {name:"TCP-flag filter", why:"SYN = attempt, SYN+ACK = open, RST = closed.", cmd:"tcp.flags.syn==1 && tcp.flags.ack==1"},
@@ -110,7 +110,7 @@ window.CHALLENGES = [
   id:"08-brute-force-at-the-gate", cat:"logs", title:"Brute Force at the Gate", diff:1, points:100,
   files:["auth.log"],
   story:"The flight-planning server takes SSH from the internet and gets hammered daily. Did anyone actually get in?",
-  question:"Which IP logged in with a password after brute-forcing, and as which user? Submit AVIANS{ip_username}.",
+  question:"Which IP logged in with a password after brute-forcing, and as which user? Submit HOSTBUSTERS{ip_username}.",
   tools:[
     {name:"grep", why:"Find matching lines.", cmd:"grep 'Failed password' auth.log"},
     {name:"awk | sort | uniq -c", why:"Count by field — the classic pipeline.", cmd:"grep Failed auth.log | awk '{print $(NF-3)}' | sort | uniq -c | sort -rn"},
@@ -124,7 +124,7 @@ window.CHALLENGES = [
   id:"09-booking-site-sqli", cat:"logs", title:"Booking Site Injection", diff:2, points:150,
   files:["access.log"],
   story:"The public flight-status page threw 500 errors this afternoon. The web team suspects SQL injection.",
-  question:"Which database table did the attacker dump in the end? Submit AVIANS{table_name}.",
+  question:"Which database table did the attacker dump in the end? Submit HOSTBUSTERS{table_name}.",
   tools:[
     {name:"awk | sort | uniq -c", why:"Top talkers by IP.", cmd:"awk '{print $1}' access.log | sort | uniq -c | sort -rn | head"},
     {name:"grep patterns", why:"UNION, SELECT, information_schema, sqlmap.", cmd:"grep -iE 'union|select|sqlmap' access.log"},
@@ -152,7 +152,7 @@ window.CHALLENGES = [
   id:"11-ghost-flight", cat:"avionics", title:"Ghost Flight", diff:3, points:250,
   files:["adsb_capture_EBBR.txt","flight_plans.csv"],
   story:"ATC at Brussels sees an ADS-B target that matches no flight plan. ADS-B has no authentication — a cheap software radio can inject fake aircraft.",
-  question:"Decode the raw capture and find the callsign with no flight plan. Submit AVIANS{CALLSIGN}.",
+  question:"Decode the raw capture and find the callsign with no flight plan. Submit HOSTBUSTERS{CALLSIGN}.",
   tools:[
     {name:"pyModeS", why:"Decodes Mode S / ADS-B. Use a venv on Kali.", cmd:"python3 -m venv ~/ctfenv && . ~/ctfenv/bin/activate && pip install pyModeS"},
     {name:"Decode one", why:"Try a single message first.", cmd:"python3 -c \"import pyModeS as p;print(p.decode('8D4840D6202CC371C32CE0576098'))\""},
@@ -166,7 +166,7 @@ window.CHALLENGES = [
   id:"12-supersonic-cessna", cat:"avionics", title:"Supersonic Cessna", diff:3, points:250,
   files:["adsb_capture_EBBR.txt","flight_plans.csv"],
   story:"Same capture. A second oddity: one aircraft reports a ground speed impossible for its type — a Cessna 172 cruises near 120 knots.",
-  question:"Find the ICAO address reporting a supersonic ground speed. Submit AVIANS{ICAO} (6 hex chars).",
+  question:"Find the ICAO address reporting a supersonic ground speed. Submit HOSTBUSTERS{ICAO} (6 hex chars).",
   tools:[
     {name:"pyModeS", why:"Type-code 19 messages decode to groundspeed, track, vertical_rate.", cmd:"import pyModeS as p; p.decode(msg)['groundspeed']"},
     {name:"flight_plans.csv", why:"Maps ICAO → aircraft type so you can judge plausibility.", cmd:"column -s, -t flight_plans.csv | less -S"}
@@ -179,7 +179,7 @@ window.CHALLENGES = [
   id:"13-squawk-alert", cat:"avionics", title:"Squawk Alert", diff:1, points:100,
   files:["transponder_log.csv"],
   story:"A decoded transponder log from approach radar. Three aircraft set special squawk codes; only one is a security incident.",
-  question:"Which callsign is signalling unlawful interference (hijack)? Submit AVIANS{CALLSIGN}.",
+  question:"Which callsign is signalling unlawful interference (hijack)? Submit HOSTBUSTERS{CALLSIGN}.",
   tools:[
     {name:"cut / awk", why:"Pull CSV columns.", cmd:"cut -d, -f3,4 transponder_log.csv | sort -u"},
     {name:"grep -E", why:"Match several codes at once.", cmd:"grep -E ',(7500|7600|7700),' transponder_log.csv"}
@@ -199,14 +199,14 @@ window.CHALLENGES = [
     {name:"CyberChef", why:"ROT13, or 'Magic' to guess the scheme.", cmd:"ROT13 / Magic"}
   ],
   learn:"ACARS carries OOOI times, weather, gate info, maintenance codes and free text, mostly unencrypted — treat anything sent over it as public. The Label field gives the message type (H1 cockpit terminal, Q0 link test, 80 OOOI). Defenders watch for odd labels, unknown registrations and sensitive data leaking.",
-  hints:["Most texts repeat; find the one that appears only once.","Look at the FREETEXT line: NIVNAF{..} — what shift turns NIVNAF into AVIANS?","ROT13: tr 'A-Za-z' 'N-ZA-Mn-za-m'"],
+  hints:["Most texts repeat; find the one that appears only once.","Look at the FREETEXT line: NIVNAF{..} — what shift turns NIVNAF into HOSTBUSTERS?","ROT13: tr 'A-Za-z' 'N-ZA-Mn-za-m'"],
   solve:"grep FREETEXT acarsdec_131725.log | tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 },
 {
   id:"15-gnss-spoofing", cat:"avionics", title:"GNSS Spoofing", diff:3, points:250,
   files:["fdr_gnss_SNX2405.nmea"],
   story:"GPS spoofing and jamming are a daily problem over parts of Europe. Flight SNX2405's GPS receiver log (NMEA) was pulled after the crew reported a position jump and nav warnings.",
-  question:"At what UTC time (HHMMSS) was the first spoofed fix recorded? Submit AVIANS{HHMMSS}.",
+  question:"At what UTC time (HHMMSS) was the first spoofed fix recorded? Submit HOSTBUSTERS{HHMMSS}.",
   tools:[
     {name:"grep + cut", why:"NMEA is comma-separated; GGA has time, lat, lon, sats, HDOP, altitude.", cmd:"grep GPGGA fdr_gnss_SNX2405.nmea | cut -d, -f2-10 | head"},
     {name:"awk / Python", why:"Compare each fix to the previous and flag big jumps.", cmd:"awk -F, '/GPGGA/{...}'"},
@@ -260,7 +260,7 @@ window.CHALLENGES = [
   id:"19-crew-hashes", cat:"forensics", title:"Crew Hashes", diff:2, points:175,
   files:["crew_accounts.hashes"],
   story:"A dump from the crew portal database: usernames and unsalted MD5 password hashes. Some passwords are weak, some are strong.",
-  question:"Crack the weak passwords. The flag is one crew member's recovered password, wrapped as AVIANS{password}.",
+  question:"Crack the weak passwords. The flag is one crew member's recovered password, wrapped as HOSTBUSTERS{password}.",
   tools:[
     {name:"john", why:"Auto-detects the hash type and cracks with a wordlist.", cmd:"john --format=raw-md5 --wordlist=aviation_wordlist.txt crew_accounts.hashes"},
     {name:"hashcat", why:"GPU cracker; mode 0 = MD5.", cmd:"hashcat -m 0 -a 0 crew_accounts.hashes aviation_wordlist.txt"},
@@ -288,7 +288,7 @@ window.CHALLENGES = [
   id:"21-yara-hunt", cat:"hunt", title:"Jackal Hunt (YARA)", diff:3, points:225,
   files:["threat_intel_report.txt","samples/"],
   story:"CTI handed you an intel report on the “JackalLoader” implant and 50 quarantined binaries from the baggage servers. Find the one real sample.",
-  question:"Write a YARA rule from the report's indicators and find the matching sample. Submit AVIANS{sample_NN}.",
+  question:"Write a YARA rule from the report's indicators and find the matching sample. Submit HOSTBUSTERS{sample_NN}.",
   tools:[
     {name:"yara", why:"Pattern-matches files against rules (strings + conditions).", cmd:"yara jackal.yar challenges/21-yara-hunt/samples/"},
     {name:"grep -r", why:"A quick cross-check for one indicator.", cmd:"grep -rl 'AVX-Tower-Mutex-7741' samples/"}
@@ -308,8 +308,8 @@ window.CHALLENGES = [
     {name:"eyes", why:"Read passwd for UID-0 extras, cron.d dotfiles, reverse-shell services, authorized_keys.", cmd:"cat metar-srv02/etc/passwd"}
   ],
   learn:"Linux persistence lives in a handful of well-known spots: cron (/etc/crontab, /etc/cron.d, hidden .files), systemd units (ExecStart running a shell/reverse shell), extra UID-0 accounts in /etc/passwd, and rogue keys in ~/.ssh/authorized_keys. Triage = check each spot. The flag's three parts hide in a cron base64 blob (part1), a systemd 'build-id' hex string (part2), and an SSH key comment (part3).",
-  hints:["Extract, then look at etc/cron.d (including dotfiles), etc/systemd/system, and home/*/.ssh/authorized_keys.","part1: base64-decode the echo in etc/cron.d/.sys-health. part2: hex-decode the build-id comment in the sync .service. part3: read the comment on the second authorized_keys line.","Concatenate AVIANS{ part1 + part2 + part3 }."],
-  solve:"tar xzf metar-srv02_triage.tar.gz\ngrep -oE '[A-Za-z0-9+/=]{20,}' metar-srv02/etc/cron.d/.sys-health | base64 -d            # part1\nsed -n 's/# build-id.*: //p' metar-srv02/etc/systemd/system/dbus-org.freedesktop.sync.service | xxd -r -p   # part2\ngrep -o 'part3=.*' metar-srv02/home/flightops/.ssh/authorized_keys                     # part3\n# combine: AVIANS{hunt_cron_systemd_and_ssh_keys}"
+  hints:["Extract, then look at etc/cron.d (including dotfiles), etc/systemd/system, and home/*/.ssh/authorized_keys.","part1: base64-decode the echo in etc/cron.d/.sys-health. part2: hex-decode the build-id comment in the sync .service. part3: read the comment on the second authorized_keys line.","Concatenate HOSTBUSTERS{ part1 + part2 + part3 }."],
+  solve:"tar xzf metar-srv02_triage.tar.gz\ngrep -oE '[A-Za-z0-9+/=]{20,}' metar-srv02/etc/cron.d/.sys-health | base64 -d            # part1\nsed -n 's/# build-id.*: //p' metar-srv02/etc/systemd/system/dbus-org.freedesktop.sync.service | xxd -r -p   # part2\ngrep -o 'part3=.*' metar-srv02/home/flightops/.ssh/authorized_keys                     # part3\n# combine: HOSTBUSTERS{hunt_cron_systemd_and_ssh_keys}"
 },
 {
   id:"23-xor-atis", cat:"offensive", title:"Scrambled ATIS", diff:1, points:100,
@@ -321,7 +321,7 @@ window.CHALLENGES = [
     {name:"xortool", why:"Guesses the key length and the most likely repeating key.", cmd:"xortool -c 20 atis_intercept.bin   (then xortool-xor -f file -s KEY)"},
     {name:"Python", why:"Once you guess the key, decoding is one line.", cmd:"bytes(b^key[i%len(key)] for i,b in enumerate(data))"}
   ],
-  learn:"XOR with a repeating key is reversible with the same key — it is obfuscation, not encryption. If you can guess any part of the plaintext (a 'crib' like 'ATIS' or 'AVIANS{'), XOR it against the ciphertext at that position to leak the key. The key here is a short word; xortool or a crib will find it fast.",
+  learn:"XOR with a repeating key is reversible with the same key — it is obfuscation, not encryption. If you can guess any part of the plaintext (a 'crib' like 'ATIS' or 'HOSTBUSTERS{'), XOR it against the ciphertext at that position to leak the key. The key here is a short word; xortool or a crib will find it fast.",
   hints:["The plaintext is aviation radio text; it almost certainly starts with 'ATIS'. XOR that crib against the first bytes to recover the start of the key.","The key is a place you'd associate with Brussels airport, 8 letters, uppercase.","key = ZAVENTEM. Decode the whole file with it."],
   solve:"python3 -c \"d=open('atis_intercept.bin','rb').read();k=b'ZAVENTEM';import sys;sys.stdout.buffer.write(bytes(b^k[i%len(k)] for i,b in enumerate(d)))\""
 },
@@ -343,7 +343,7 @@ window.CHALLENGES = [
   id:"25-crew-portal-jwt", cat:"offensive", title:"Crew Portal Token", diff:2, points:175,
   files:["captured_token.txt"],
   story:"A JSON Web Token was captured from the crew portal's 'remember me' cookie. It is signed with HS256, and the server reuses a weak secret.",
-  question:"Crack the signing secret. Submit it as AVIANS{secret}.",
+  question:"Crack the signing secret. Submit it as HOSTBUSTERS{secret}.",
   tools:[
     {name:"jwt_tool", why:"Inspects, cracks and forges JWTs.", cmd:"jwt_tool TOKEN -C -d aviation_wordlist.txt"},
     {name:"hashcat", why:"Mode 16500 cracks HS256 JWTs against a wordlist.", cmd:"hashcat -m 16500 token.txt aviation_wordlist.txt"},

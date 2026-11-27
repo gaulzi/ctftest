@@ -1,11 +1,11 @@
-# Avians Flight Deck — practice CTF
+# HostBusters Flight Deck — practice CTF
 
 A self-contained, aviation-themed practice range to warm up for the Brussels CTF.
 It is built for a **mixed team** (blue team, offensive, reverse engineering, forensics, CTI):
 27 challenges across seven areas, each with a briefing, the exact tools to reach for,
 what you are meant to learn, tiered hints, and a full walkthrough for when you are stuck.
 
-Flags look like `AVIANS{...}`. The web portal checks them locally in your browser
+Flags look like `HOSTBUSTERS{...}`. The web portal checks them locally in your browser
 (SHA-256 against `portal/flags.js`), so no server or internet is needed to play.
 
 ## Run it locally (recommended for practice)
@@ -39,7 +39,7 @@ To host it at **ctf.1337.is** on Cloudflare, see [docs/DEPLOY.md](docs/DEPLOY.md
 portal/            the web portal (index.html + data.js + flags.js)
 challenges/        one folder per challenge, with the evidence files
   _shared/         aviation_wordlist.txt used by the cracking challenges
-  avians-ctf-pack.zip   everything zipped, for easy transfer to a VM
+  hostbusters-ctf-pack.zip   everything zipped, for easy transfer to a VM
 generator/         scripts that build every challenge file (build.py)
 solutions/         FLAGS_SPOILERS.txt — all answers. Do NOT deploy this folder.
 docs/              setup, event-prep and deployment guides

@@ -1,4 +1,4 @@
-# Avians Kali Toolbox (Season 2)
+# HostBusters Kali Toolbox (Season 2)
 
 A harder follow-up to the Season 1 range, organised around **the Kali tools themselves**.
 Every challenge exists to teach one tool you'd actually reach for in a mixed CTF — the

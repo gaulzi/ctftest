@@ -1,2 +1,2 @@
 A shadow file from the tower workstation. One account has a crackable password.
-The flag is AVIANS{that_password} once you recover it.
+The flag is HOSTBUSTERS{that_password} once you recover it.

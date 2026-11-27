@@ -17,7 +17,7 @@ window.CHALLENGES = [
   id:"o01-exif-geolocate", cat:"osint", tool:"exiftool", title:"Apron Photo", diff:1, points:100,
   files:["apron_dawn.jpg","note.txt"],
   story:"A crew member posted a 'harmless' apron photo. Phones stamp photos with GPS, and GPS gives away airports.",
-  question:"Read the photo's coordinates, find the airport, and submit its 4-letter ICAO code: AVIANS{XXXX}.",
+  question:"Read the photo's coordinates, find the airport, and submit its 4-letter ICAO code: HOSTBUSTERS{XXXX}.",
   tools:[
     {name:"exiftool", why:"Reads every metadata tag, GPS included.", cmd:"exiftool apron_dawn.jpg"},
     {name:"a map", why:"Turn lat/long into a place. OpenStreetMap or Google Maps.", cmd:"paste '50.9014, 4.4844' into the search box"},
@@ -25,7 +25,7 @@ window.CHALLENGES = [
   ],
   learn:"The first move of photo OSINT is always metadata. `exiftool` dumps GPSLatitude/GPSLongitude (and often the camera, owner and timestamps). Drop the coordinates on a map; here they land on a well-known European hub. Airports are identified by ICAO (4 letters, e.g. EBBR) and IATA (3 letters, e.g. BRU) codes — the flag wants the ICAO.",
   hints:["exiftool apron_dawn.jpg — look at the GPS Position line.","Put the latitude/longitude into any map. What airport is it?","It's Brussels Airport. Its ICAO code is the flag."],
-  solve:"exiftool -gpslatitude -gpslongitude -artist apron_dawn.jpg\n# 50.9014 N, 4.4844 E = Brussels Airport = ICAO EBBR  ->  AVIANS{EBBR}"
+  solve:"exiftool -gpslatitude -gpslongitude -artist apron_dawn.jpg\n# 50.9014 N, 4.4844 E = Brussels Airport = ICAO EBBR  ->  HOSTBUSTERS{EBBR}"
 },
 {
   id:"o02-site-recon", cat:"osint", tool:"git / gitleaks", title:"Left Behind", diff:2, points:175,
@@ -33,13 +33,13 @@ window.CHALLENGES = [
   story:"You mirrored a small public site. The live files look clean — but OSINT is about what got left behind: robots.txt, backups, and version-control folders that were never meant to ship.",
   question:"Dig through the mirror and recover the API token that was committed and later 'removed'.",
   tools:[
-    {name:"robots.txt", why:"Lists paths the owner would rather you didn't visit — a map of what's hidden.", cmd:"cat avians-ground-services/robots.txt"},
+    {name:"robots.txt", why:"Lists paths the owner would rather you didn't visit — a map of what's hidden.", cmd:"cat hostbusters-ground-services/robots.txt"},
     {name:"git", why:"An exposed .git folder is the whole history. 'Removed' secrets still live in old commits.", cmd:"git -C <dir> log -p   /   git show <oldcommit>"},
     {name:"gitleaks / trufflehog", why:"Scan a repo's whole history for secrets automatically.", cmd:"gitleaks detect --source <dir>"}
   ],
   learn:"Web recon is reading the leftovers. `robots.txt` points at a backup folder; inside is an exposed `.git` directory (a classic real-world leak). Deleting a secret in a new commit does NOT remove it — it's still in history. `git log -p`, `git show <commit>`, or an automated scanner (gitleaks) recovers it. On a live target you'd mirror the .git first with git-dumper, then do exactly this.",
   hints:["tar xzf mirror.tar.gz; read robots.txt. Where does it tell you not to look?","That folder contains a .git directory. Run: git -C .../private-backup log --oneline","The latest commit 'removed' the token. git show the commit before it — or just git log -p."],
-  solve:"tar xzf mirror.tar.gz && cd avians-ground-services/private-backup\ngit log --oneline\ngit log -p | grep -i api_token        # the token is in the first commit\n# or: gitleaks detect --source . "
+  solve:"tar xzf mirror.tar.gz && cd hostbusters-ground-services/private-backup\ngit log --oneline\ngit log -p | grep -i api_token        # the token is in the first commit\n# or: gitleaks detect --source . "
 },
 {
   id:"s01-tshark-exfil", cat:"network", tool:"tshark / Wireshark", title:"Carried Off", diff:2, points:150,
@@ -81,7 +81,7 @@ window.CHALLENGES = [
   ],
   learn:"LSB steganography flips the lowest bit of each colour channel to store data — invisible to the eye. `zsteg -a` brute-forces the common encodings (bit depth, channel order, pixel direction) and prints anything that looks like text. The hit here is the standard `b1,rgb,lsb,xy`: bit 1, R→G→B, LSB-first, row-major.",
   hints:["zsteg -a approach_chart.png and scan the output for readable ASCII.","The payload is in the b1,rgb,lsb,xy channel.","zsteg -E 'b1,rgb,lsb,xy' approach_chart.png"],
-  solve:"zsteg -a approach_chart.png   # look for the AVIANS{...} line\n# or: zsteg -E 'b1,rgb,lsb,xy' approach_chart.png"
+  solve:"zsteg -a approach_chart.png   # look for the HOSTBUSTERS{...} line\n# or: zsteg -E 'b1,rgb,lsb,xy' approach_chart.png"
 },
 {
   id:"s04-spectrogram", cat:"stego", tool:"sox / Audacity", title:"Tower Recording", diff:2, points:175,
@@ -132,17 +132,17 @@ window.CHALLENGES = [
   question:"Brute the passphrase and decrypt the file.",
   tools:[
     {name:"openssl enc", why:"Decrypts the blob once you have the passphrase.", cmd:"openssl enc -d -aes-256-cbc -pbkdf2 -k PASS -in secret.enc"},
-    {name:"a bash loop", why:"Try every wordlist entry until one decrypts cleanly.", cmd:"while read p; do openssl enc -d -aes-256-cbc -pbkdf2 -k \"$p\" -in secret.enc 2>/dev/null | grep -qa AVIANS && echo $p; done < wordlist"},
+    {name:"a bash loop", why:"Try every wordlist entry until one decrypts cleanly.", cmd:"while read p; do openssl enc -d -aes-256-cbc -pbkdf2 -k \"$p\" -in secret.enc 2>/dev/null | grep -qa HOSTBUSTERS && echo $p; done < wordlist"},
     {name:"file header", why:"'Salted__' at the start tells you it's OpenSSL enc with a salt.", cmd:"xxd secret.enc | head -1"}
   ],
   learn:"`openssl enc` files begin with `Salted__` + an 8-byte salt; modern ones derive the key with PBKDF2 (`-pbkdf2`). If the passphrase is weak, loop a wordlist through `openssl enc -d` and keep the password whose output isn't garbage. Note the `-pbkdf2` flag must match how it was encrypted, or every password 'fails'.",
   hints:["xxd secret.enc | head — the 'Salted__' magic confirms OpenSSL enc.","Decrypt with: openssl enc -d -aes-256-cbc -pbkdf2 -k <pass> -in secret.enc","Loop the aviation wordlist; the right password prints readable text (the one here is a turbine-ish word)."],
-  solve:"while read p; do openssl enc -d -aes-256-cbc -pbkdf2 -k \"$p\" -in secret.enc 2>/dev/null | grep -qa AVIANS && { echo \"pw=$p\"; openssl enc -d -aes-256-cbc -pbkdf2 -k \"$p\" -in secret.enc; break; }; done < ../_shared/aviation_wordlist.txt   # pw: turbine123"
+  solve:"while read p; do openssl enc -d -aes-256-cbc -pbkdf2 -k \"$p\" -in secret.enc 2>/dev/null | grep -qa HOSTBUSTERS && { echo \"pw=$p\"; openssl enc -d -aes-256-cbc -pbkdf2 -k \"$p\" -in secret.enc; break; }; done < ../_shared/aviation_wordlist.txt   # pw: turbine123"
 },
 {
   id:"s08-john-shadow", cat:"password", tool:"john", title:"Shadow of the Tower", diff:2, points:150,
   files:["shadow","note.txt"],
-  story:"A shadow file from the tower workstation. One account has a crackable password; the flag is AVIANS{that_password}.",
+  story:"A shadow file from the tower workstation. One account has a crackable password; the flag is HOSTBUSTERS{that_password}.",
   question:"Crack the cracker-friendly account and wrap its password as the flag.",
   tools:[
     {name:"john", why:"Auto-detects the $6$ (sha512crypt) format and cracks with a wordlist.", cmd:"john --wordlist=aviation_wordlist.txt shadow"},
@@ -150,8 +150,8 @@ window.CHALLENGES = [
     {name:"unshadow", why:"Combine passwd+shadow when you have both (not needed here).", cmd:"unshadow passwd shadow > hashes"}
   ],
   learn:"`$6$` marks sha512crypt — salted and slow by design, so cracking it needs a good wordlist (brute force is hopeless). `john` fingerprints the format automatically; `john --show` lists what cracked. One account's hash is uncrackable on purpose (don't waste time on root) — picking the right target matters.",
-  hints:["john --wordlist=challenges/_shared/aviation_wordlist.txt shadow","Only one account cracks (towerop). root is a dummy — ignore it.","john --show shadow, then wrap the recovered password: AVIANS{...} (a contrail-ish word + year)."],
-  solve:"john --wordlist=../_shared/aviation_wordlist.txt shadow\njohn --show shadow   # towerop:contrail2026  ->  AVIANS{contrail2026}"
+  hints:["john --wordlist=challenges/_shared/aviation_wordlist.txt shadow","Only one account cracks (towerop). root is a dummy — ignore it.","john --show shadow, then wrap the recovered password: HOSTBUSTERS{...} (a contrail-ish word + year)."],
+  solve:"john --wordlist=../_shared/aviation_wordlist.txt shadow\njohn --show shadow   # towerop:contrail2026  ->  HOSTBUSTERS{contrail2026}"
 },
 {
   id:"s09-hashid-crack", cat:"password", tool:"hashid / hashcat", title:"Unknown Hash", diff:2, points:150,
@@ -164,8 +164,8 @@ window.CHALLENGES = [
     {name:"john", why:"Or: john --format=raw-sha1.", cmd:"john --format=raw-sha1 --wordlist=aviation_wordlist.txt mystery.hash"}
   ],
   learn:"Step one is always identification: length and charset narrow it down (40 hex chars → SHA-1 or RIPEMD-160). `hashid` suggests candidates and the matching cracker modes. Pick the most likely, crack with your wordlist, done. Getting the mode wrong is the usual reason 'nothing cracks'.",
-  hints:["hashid \"$(cat mystery.hash)\" — 40 hex characters points at SHA-1.","hashcat -m 100 mystery.hash challenges/_shared/aviation_wordlist.txt","Wrap the recovered word as AVIANS{...} (an albatross-ish word + a digit)."],
-  solve:"hashid \"$(cat mystery.hash)\"\njohn --format=raw-sha1 --wordlist=../_shared/aviation_wordlist.txt mystery.hash\njohn --format=raw-sha1 --show mystery.hash   # albatross7  ->  AVIANS{albatross7}"
+  hints:["hashid \"$(cat mystery.hash)\" — 40 hex characters points at SHA-1.","hashcat -m 100 mystery.hash challenges/_shared/aviation_wordlist.txt","Wrap the recovered word as HOSTBUSTERS{...} (an albatross-ish word + a digit)."],
+  solve:"hashid \"$(cat mystery.hash)\"\njohn --format=raw-sha1 --wordlist=../_shared/aviation_wordlist.txt mystery.hash\njohn --format=raw-sha1 --show mystery.hash   # albatross7  ->  HOSTBUSTERS{albatross7}"
 },
 {
   id:"s10-radare2-serial", cat:"reversing", tool:"radare2 / Ghidra", title:"Licence Key", diff:3, points:225,

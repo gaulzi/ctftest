@@ -1,18 +1,18 @@
 // SHA-256 of lower-cased flags. No plaintext.
 window.FLAG_HASHES = {
-  "s01-tshark-exfil": "02c07468fde25180aaf3586a3f30510a2a519ef2b819dc752d70dc81b41793fe",
-  "s02-binwalk-carve": "b856c31e6d6ece19cca865e4df199e9ed1813c3a0d6b001653c1cbf3098f21f3",
-  "s03-zsteg-lsb": "249f8a5a9bfdabfb1f42a75fe82ec151b6b4e9a0a1d355b32e8da7f4b4a43ef6",
-  "s04-spectrogram": "ff8a541eaccf1c3af805cfa723f8926343655e16c2df1b9593502af8398d86b0",
-  "s05-zbarimg-qr": "55ee1da90a52365e07bc6b23fa010a6aefe8c2f9161313a3f9c5526ae858addf",
-  "s06-corrupt-png": "c9bafdc94ef3202e3afe00562526a3e18e0d4f6f5fe6414d0e4564a62189e3bf",
-  "s07-openssl-enc": "0a4161ef3d7360d6d70cd800f65ad7ce425ffcea2204eee8e64c53dc833ea0c2",
-  "s08-john-shadow": "c19a16a086e58ce6b5e22ab021fcbeac6f631e995607ac5eaad3c1cab751fb3f",
-  "s09-hashid-crack": "86b4ed4211bf9cde04458a88395e30c0ea78edd1889d8ae4e17d9103fe3c5003",
-  "s10-radare2-serial": "f02542f0cbfacf14c0679dc6f1c6354ea947eff6c6da146aba0602a65631ec0a",
-  "s11-ltrace-strcmp": "690facda8e616f89b8fe376cbc03c4c5d3695abe906177f7322d0250d7cde0fa",
-  "s12-pdf-stream": "4b2b300f5c4144456a91bfe27b5925b6dba4be27d546a19168fcbf5236474700",
-  "s13-cyberchef-magic": "163a1906e9c2cc094544d3ce73297b6e2f17f2b8f5f22b6abbc8510dc1939057",
-  "o01-exif-geolocate": "11b3738b5ff914967cfef81d5db76653293c158a0d0003169b41bb6b6a6b9131",
-  "o02-site-recon": "02026893ba64e34e2c8d681280c6dba67195f2990ee94ae58c29dfd3f75f50fa"
+  "s01-tshark-exfil": "7982b73727498271bb6dad4848fa27f7bf5b54533e48e1743df68b90b6d083c0",
+  "s02-binwalk-carve": "4ed008ce4cc3520df05149d3721dbfa437f2b3a85f23d11c789735b529525159",
+  "s03-zsteg-lsb": "96f966c1b7ca6f9f23b9a40edb339c21846db9eb4ea659c006732e4496b4133f",
+  "s04-spectrogram": "e67ed76848f71b17fd977348d1f8d5f1720ac2f3a6825b024cb12ba0022e8932",
+  "s05-zbarimg-qr": "598ba0b5e7f5ca638602e3f98b912e785f13a8b67a8eaa43a962a11b76a84aa1",
+  "s06-corrupt-png": "489e17810c4d591b1a4244bd4ed64c94ef5247a739542417bafe40d5707ff61b",
+  "s07-openssl-enc": "12dabb5233917d4af4cb804945c7a49b9d19f584d753f89d9d8c345d37822231",
+  "s08-john-shadow": "9c3415bd5efb62b4c58731f965dc9cf96244cd8cdb45a8f95c019cd89020072b",
+  "s09-hashid-crack": "430520676217be6346a5d02c8bf497c227c4b4bb8e7dcda7374ff90765e84c57",
+  "s10-radare2-serial": "bd3560c7631d2eb3e99ac59d762abff3e715f551cff73b6d0bbfeebae41de478",
+  "s11-ltrace-strcmp": "a52a6fd4f8f2a80c57de37037ff0bc3830eac91a0771c0b81d244ab8fca4581f",
+  "s12-pdf-stream": "298c95051987dc0ac05f382070c96ea29ee1fab74fadeb9c14497c4716edc9ef",
+  "s13-cyberchef-magic": "9802de7b766f938b44cae666b13a69e99fd77a33aaac26d0745cfe417b0549cc",
+  "o01-exif-geolocate": "6b42b89da658db6db79a966add54f7227aa063eb2688fa3f5a0c276fdbea9999",
+  "o02-site-recon": "e83c8110fb7d51f224a1c1e1c3a0747d510b0cf9ea0116bebe59e6d1eb945132"
 };

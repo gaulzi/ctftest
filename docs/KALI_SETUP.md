@@ -69,12 +69,12 @@ A couple need a note:
 
 ## 4. Get the challenge files into the VM
 
-Easiest: copy `challenges/avians-ctf-pack.zip` into the VM (shared folder, or just
+Easiest: copy `challenges/hostbusters-ctf-pack.zip` into the VM (shared folder, or just
 download it from your running portal) and unzip:
 
 ```bash
-unzip avians-ctf-pack.zip -d avians-ctf
-cd avians-ctf
+unzip hostbusters-ctf-pack.zip -d hostbusters-ctf
+cd hostbusters-ctf
 ```
 
 Then run the portal from the repo root so you can download files and submit flags:

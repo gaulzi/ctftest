@@ -1,4 +1,4 @@
-<title>Avians Flight Deck CTF</title>
+<title>HostBusters Flight Deck CTF</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* Layout: fixed radar-dark sidebar of categories + scrolling challenge list; challenge opens in a modal panel.
@@ -124,7 +124,7 @@ footer code{color:var(--muted)}
 
 <header><div class="wrap head">
   <div class="logo" aria-hidden="true"></div>
-  <div class="title"><b>AVIANS FLIGHT DECK</b><span>practice capture-the-flag &middot; blue / offensive / RE / forensics</span></div>
+  <div class="title"><b>HOSTBUSTERS FLIGHT DECK</b><span>practice capture-the-flag &middot; blue / offensive / RE / forensics</span></div>
   <div class="score">
     <div class="pts"><span id="pts">0</span></div>
     <div class="lbl"><span id="done">0</span>/<span id="total">0</span> solved</div>
@@ -136,11 +136,11 @@ footer code{color:var(--muted)}
   <div class="intro">
     A self-contained training range for the Brussels event. Every challenge is aviation-themed and solvable with standard Kali tools.
     Download the file(s), work in your VM, and submit the flag here &mdash; flags are checked locally in your browser, so <b>nothing you enter leaves this page</b>.
-    Flags look like <code>AVIANS{&hellip;}</code>. Stuck? Open a challenge and reveal hints one at a time; the full walkthrough is there if you need it.
+    Flags look like <code>HOSTBUSTERS{&hellip;}</code>. Stuck? Open a challenge and reveal hints one at a time; the full walkthrough is there if you need it.
     <div class="row">
-      <span class="chip">format&nbsp; <b>AVIANS{...}</b></span>
+      <span class="chip">format&nbsp; <b>HOSTBUSTERS{...}</b></span>
       <span class="chip">wordlist&nbsp; <b>challenges/_shared/aviation_wordlist.txt</b></span>
-      <span class="chip">everything&nbsp; <b>challenges/avians-ctf-pack.zip</b></span>
+      <span class="chip">everything&nbsp; <b>challenges/hostbusters-ctf-pack.zip</b></span>
     </div>
   </div>
 
@@ -164,8 +164,8 @@ const $=(s,r=document)=>r.querySelector(s), el=(t,c,h)=>{const e=document.create
 const esc=s=>String(s).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
 const HASHES=window.FLAG_HASHES||{}, CH=window.CHALLENGES||[], CATS=window.CATEGORIES||[];
 let solved={}, curCat='all';
-try{solved=JSON.parse(localStorage.getItem('avians_solved')||'{}')}catch(e){solved={}}
-const save=()=>{try{localStorage.setItem('avians_solved',JSON.stringify(solved))}catch(e){}};
+try{solved=JSON.parse(localStorage.getItem('hostbusters_solved')||'{}')}catch(e){solved={}}
+const save=()=>{try{localStorage.setItem('hostbusters_solved',JSON.stringify(solved))}catch(e){}};
 async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 
 function score(){
@@ -252,7 +252,7 @@ function open(c){
   const fb=el('div','flagbox');
   fb.innerHTML='<h4 style="margin-bottom:10px">Submit flag</h4>';
   const form=el('form','flagform');
-  const inp=el('input'); inp.placeholder='AVIANS{...}'; inp.id='flaginp'; inp.autocomplete='off';
+  const inp=el('input'); inp.placeholder='HOSTBUSTERS{...}'; inp.id='flaginp'; inp.autocomplete='off';
   if(solved[c.id]){inp.value='✓ already solved';inp.disabled=true}
   const btn=el('button',null,null); btn.type='submit'; btn.textContent=solved[c.id]?'✓':'Check';
   form.appendChild(inp); form.appendChild(btn);
@@ -262,7 +262,7 @@ function open(c){
     const hit=HASHES[c.id] && (await sha(g.toLowerCase()))===HASHES[c.id];
     if(hit){v.className='verdict ok';v.textContent='✓ Correct — cleared for takeoff. +'+c.points+' pts';
       solved[c.id]=true;save();score();rail();grid();btn.textContent='✓';}
-    else{v.className='verdict no';v.textContent='✗ Not quite. Check the format AVIANS{...} and try another hint.'}
+    else{v.className='verdict no';v.textContent='✗ Not quite. Check the format HOSTBUSTERS{...} and try another hint.'}
   };
   fb.appendChild(form); fb.appendChild(v); m.appendChild(fb);
 

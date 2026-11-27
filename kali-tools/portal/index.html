@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Avians Kali Toolbox</title>
+<title>HostBusters Kali Toolbox</title>
 <style>
 /* Layout: fixed radar-dark sidebar of categories + scrolling challenge list; challenge opens in a modal panel.
    Palette: night-cockpit navy, instrument amber + radar green accents, warm-grey neutrals biased to navy. */
@@ -128,7 +128,7 @@ footer code{color:var(--muted)}
 
 <header><div class="wrap head">
   <div class="logo" aria-hidden="true"></div>
-  <div class="title"><b>AVIANS KALI TOOLBOX</b><span>season 2 &middot; a harder range, one Kali tool per challenge</span></div>
+  <div class="title"><b>HOSTBUSTERS KALI TOOLBOX</b><span>season 2 &middot; a harder range, one Kali tool per challenge</span></div>
   <div class="score">
     <div class="pts"><span id="pts">0</span></div>
     <div class="lbl"><span id="done">0</span>/<span id="total">0</span> solved</div>
@@ -142,7 +142,7 @@ footer code{color:var(--muted)}
     the green badge names it. Fewer hints than Season 1, and a strong OSINT track because the organisers say there'll be a lot of it.
     Download the file(s), work in your VM, and submit the flag here &mdash; checked locally in your browser, so <b>nothing you enter leaves this page</b>.
     <div class="row">
-      <span class="chip">format&nbsp; <b>AVIANS{...}</b></span>
+      <span class="chip">format&nbsp; <b>HOSTBUSTERS{...}</b></span>
       <span class="chip">wordlist&nbsp; <b>challenges/_shared/aviation_wordlist.txt</b></span>
       <span class="chip">new to OSINT?&nbsp; <b>read docs/OSINT_GUIDE</b></span>
     </div>
@@ -168,8 +168,8 @@ const $=(s,r=document)=>r.querySelector(s), el=(t,c,h)=>{const e=document.create
 const esc=s=>String(s).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
 const HASHES=window.FLAG_HASHES||{}, CH=window.CHALLENGES||[], CATS=window.CATEGORIES||[];
 let solved={}, curCat='all';
-try{solved=JSON.parse(localStorage.getItem('avians_solved')||'{}')}catch(e){solved={}}
-const save=()=>{try{localStorage.setItem('avians_solved',JSON.stringify(solved))}catch(e){}};
+try{solved=JSON.parse(localStorage.getItem('hostbusters_solved')||'{}')}catch(e){solved={}}
+const save=()=>{try{localStorage.setItem('hostbusters_solved',JSON.stringify(solved))}catch(e){}};
 async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 
 function score(){
@@ -259,7 +259,7 @@ function open(c){
   const fb=el('div','flagbox');
   fb.innerHTML='<h4 style="margin-bottom:10px">Submit flag</h4>';
   const form=el('form','flagform');
-  const inp=el('input'); inp.placeholder='AVIANS{...}'; inp.id='flaginp'; inp.autocomplete='off';
+  const inp=el('input'); inp.placeholder='HOSTBUSTERS{...}'; inp.id='flaginp'; inp.autocomplete='off';
   if(solved[c.id]){inp.value='✓ already solved';inp.disabled=true}
   const btn=el('button',null,null); btn.type='submit'; btn.textContent=solved[c.id]?'✓':'Check';
   form.appendChild(inp); form.appendChild(btn);
@@ -269,7 +269,7 @@ function open(c){
     const hit=HASHES[c.id] && (await sha(g.toLowerCase()))===HASHES[c.id];
     if(hit){v.className='verdict ok';v.textContent='✓ Correct — cleared for takeoff. +'+c.points+' pts';
       solved[c.id]=true;save();score();rail();grid();btn.textContent='✓';}
-    else{v.className='verdict no';v.textContent='✗ Not quite. Check the format AVIANS{...} and try another hint.'}
+    else{v.className='verdict no';v.textContent='✗ Not quite. Check the format HOSTBUSTERS{...} and try another hint.'}
   };
   fb.appendChild(form); fb.appendChild(v); m.appendChild(fb);
 

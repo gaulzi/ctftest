@@ -33,7 +33,7 @@ competent. It leans aviation because that's your event.
 - **Wayback Machine** (web.archive.org) — old versions of a page; deleted content, exposed files.
 - `robots.txt`, `/sitemap.xml`, exposed `.git` — what a site tried to hide. *Challenge: o02.*
 - `recon-ng` / `spiderfoot` — frameworks that automate a lot of the above.
-- **Google dorking** — `site:`, `filetype:pdf`, `intitle:`, `inurl:`, `"exact phrase"`, `-exclude`. e.g. `site:avians.example filetype:xlsx`.
+- **Google dorking** — `site:`, `filetype:pdf`, `intitle:`, `inurl:`, `"exact phrase"`, `-exclude`. e.g. `site:hostbusters.example filetype:xlsx`.
 - **Shodan / Censys** — search the internet's exposed services by banner, port, org, location.
 
 ## Aviation OSINT — the part that's specific to your event

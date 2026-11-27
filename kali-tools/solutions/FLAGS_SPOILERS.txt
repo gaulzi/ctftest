@@ -1,17 +1,17 @@
 SPOILERS - Season 2 flags
 
-s01-tshark-exfil: AVIANS{follow_the_tcp_stream}
-s02-binwalk-carve: AVIANS{carved_from_the_blob}
-s03-zsteg-lsb: AVIANS{least_significant_bird}
-s04-spectrogram: AVIANS{i_can_see_your_voice}
-s05-zbarimg-qr: AVIANS{scan_me_if_you_can}
-s06-corrupt-png: AVIANS{fixed_the_broken_wing}
-s07-openssl-enc: AVIANS{openssl_enc_decrypted}
-s08-john-shadow: AVIANS{contrail2026}
-s09-hashid-crack: AVIANS{albatross7}
-s10-radare2-serial: AVIANS{radare_reads_the_serial}
-s11-ltrace-strcmp: AVIANS{ltrace_leaked_the_strcmp}
-s12-pdf-stream: AVIANS{deflated_pdf_stream}
-s13-cyberchef-magic: AVIANS{magic_peels_the_onion}
-o01-exif-geolocate: AVIANS{EBBR}
-o02-site-recon: AVIANS{exposed_dot_git_leaks_secrets}
+s01-tshark-exfil: HOSTBUSTERS{follow_the_tcp_stream}
+s02-binwalk-carve: HOSTBUSTERS{carved_from_the_blob}
+s03-zsteg-lsb: HOSTBUSTERS{least_significant_bird}
+s04-spectrogram: HOSTBUSTERS{i_can_see_your_voice}
+s05-zbarimg-qr: HOSTBUSTERS{scan_me_if_you_can}
+s06-corrupt-png: HOSTBUSTERS{fixed_the_broken_wing}
+s07-openssl-enc: HOSTBUSTERS{openssl_enc_decrypted}
+s08-john-shadow: HOSTBUSTERS{contrail2026}
+s09-hashid-crack: HOSTBUSTERS{albatross7}
+s10-radare2-serial: HOSTBUSTERS{radare_reads_the_serial}
+s11-ltrace-strcmp: HOSTBUSTERS{ltrace_leaked_the_strcmp}
+s12-pdf-stream: HOSTBUSTERS{deflated_pdf_stream}
+s13-cyberchef-magic: HOSTBUSTERS{magic_peels_the_onion}
+o01-exif-geolocate: HOSTBUSTERS{EBBR}
+o02-site-recon: HOSTBUSTERS{exposed_dot_git_leaks_secrets}

